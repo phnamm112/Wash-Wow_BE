@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wash&Wow.API", "EXE2_Wash&Wow\Wash&Wow.API.csproj", "{4131803E-2CCE-4EBE-8B55-0D0B1793A6D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WashAndWow.API", "WashAndWow.API\WashAndWow.API.csproj", "{4131803E-2CCE-4EBE-8B55-0D0B1793A6D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - API", "1 - API", "{FE45CFB5-0784-4B67-8F2A-97B5B8018177}"
 EndProject
@@ -13,11 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 - Infrastructure", "4 - Infrastructure", "{48F9740A-74BD-4432-8E08-9086B6ABE704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wash&Wow.Application", "Wash&Wow.Application\Wash&Wow.Application.csproj", "{9EF50316-CC8E-4E08-A7AB-1A2B43C9D9BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WashAndWow.Application", "WashAndWow.Application\WashAndWow.Application.csproj", "{9EF50316-CC8E-4E08-A7AB-1A2B43C9D9BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wash&Wow.Domain", "Wash&Wow.Domain\Wash&Wow.Domain.csproj", "{0D16A10E-1FAE-4C2D-A654-48ED859B9AFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WashAndWow.Domain", "WashAndWow.Domain\WashAndWow.Domain.csproj", "{0D16A10E-1FAE-4C2D-A654-48ED859B9AFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wash&Wow.Infrastructure", "Wash&Wow.Infrastructure\Wash&Wow.Infrastructure.csproj", "{5E5B5784-2801-46E1-9865-431E94F23DFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WashAndWow.Infrastructure", "WashAndWow.Infrastructure\WashAndWow.Infrastructure.csproj", "{5E5B5784-2801-46E1-9865-431E94F23DFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <RootNamespace>Wash_Wow.Infrastructure</RootNamespace>
+    <RootNamespace>WashAndWow.Infrastructure</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -28,11 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\Configurations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Wash&amp;Wow.Domain\Wash&amp;Wow.Domain.csproj" />
+    <ProjectReference Include="..\WashAndWow.Domain\WashAndWow.Domain.csproj" />
   </ItemGroup>
 
 </Project>

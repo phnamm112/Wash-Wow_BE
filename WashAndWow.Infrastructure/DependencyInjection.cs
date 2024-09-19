@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Interfaces;
 using Wash_Wow.Infrastructure.Persistence;
+using Wash_Wow.Domain.Repositories;
+using Wash_Wow.Infrastructure.Repositories;
 
 namespace Wash_Wow.Infrastructure;
 
@@ -26,9 +28,10 @@ public static class DependencyInjection
                 });
             options.UseLazyLoadingProxies();
         });
-
+        // scope/htmlclient ở đây
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
-        //
+        // repo inject ở đây
+        services.AddTransient<IUserRepository, UserRepository>();
         return services;
     }
 }

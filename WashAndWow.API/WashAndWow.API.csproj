@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>EXE2_Wash_Wow</RootNamespace>
+    <RootNamespace>WashAndWow.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,13 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Wash&amp;Wow.Application\Wash&amp;Wow.Application.csproj" />
-    <ProjectReference Include="..\Wash&amp;Wow.Domain\Wash&amp;Wow.Domain.csproj" />
-    <ProjectReference Include="..\Wash&amp;Wow.Infrastructure\Wash&amp;Wow.Infrastructure.csproj" />
+    <ProjectReference Include="..\WashAndWow.Application\WashAndWow.Application.csproj" />
+    <ProjectReference Include="..\WashAndWow.Domain\WashAndWow.Domain.csproj" />
+    <ProjectReference Include="..\WashAndWow.Infrastructure\WashAndWow.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
