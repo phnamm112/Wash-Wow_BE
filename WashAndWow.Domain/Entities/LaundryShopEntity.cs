@@ -23,10 +23,13 @@ namespace Wash_Wow.Domain.Entities
         public required LaundryShopStatus Status { get; set; }
         public required TimeSpan OpeningHour { get; set; }
         public required TimeSpan ClosingHour {  get; set; }
+
         public required string OwnerID { get; set; }
         [ForeignKey(nameof(OwnerID))]
         public virtual UserEntity Owner { get; set; }
-        public virtual ICollection<BookingEntity> Bookings { get; set; }
-        public virtual ICollection<ShopServiceEntity> Services { get; set; }
+
+        public virtual ICollection<BookingEntity> Bookings { get; set; }   // List đơn đã book
+        public virtual ICollection<ShopServiceEntity> Services { get; set; } // List service của shop
+        public virtual ICollection<RatingEntity> Ratings { get; set; }   // List rating
     }
 }

@@ -18,12 +18,19 @@ namespace Wash_Wow.Domain.Entities
         public string? Note { get; set; }
         public required BookingStatus Status { get; set; }
         public required DateTime ShopPickupTime { get; set; }
-        public required string CustomerID {  get; set; } // get data sdt và tên người dùng, khỏi lưu field data chi cho mệt
-        [ForeignKey(nameof(CustomerID))]
+
+       
+        [ForeignKey(nameof(CreatorID))]  // Booking luôn là customer
         public virtual UserEntity Customer { get; set; }
+
         public required string LaundryShopID {  get; set; }
         [ForeignKey(nameof(LaundryShopID))]
         public virtual LaundryShopEntity LaundryShop { get; set; }
+
+        public required string VoucherID {  get; set; }  // 2 case: creator là admin/shop owner
+        [ForeignKey(nameof(VoucherID))]
+        public virtual VoucherEntity Voucher { get; set; }
+
         public virtual ICollection<BookingItemEntity> BookingItems { get; set; }
     }
 }

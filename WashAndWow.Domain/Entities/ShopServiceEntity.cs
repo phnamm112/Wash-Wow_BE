@@ -18,5 +18,7 @@ namespace WashAndWow.Domain.Entities
         public required string ShopID { get; set; }
         [ForeignKey(nameof(ShopID))]
         public virtual LaundryShopEntity LaundryShop { get; set; }
+
+        public virtual ICollection<BookingItemEntity> BookingItems { get; set; } // List các item đã chọn service
     }
 }

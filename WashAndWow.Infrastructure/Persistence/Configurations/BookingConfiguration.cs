@@ -19,9 +19,9 @@ namespace WashAndWow.Infrastructure.Persistence.Configurations
             builder.Property(e => e.Status)
                 .HasConversion(v => v.ToString()
                 , v => (BookingStatus)Enum.Parse(typeof(BookingStatus), v));
+
             builder.HasOne(b => b.Customer)
                 .WithMany(u => u.Bookings)
-                .HasForeignKey(b => b.CustomerID)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
