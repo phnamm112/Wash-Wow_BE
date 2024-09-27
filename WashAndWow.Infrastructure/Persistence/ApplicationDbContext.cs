@@ -20,6 +20,10 @@ namespace Wash_Wow.Infrastructure.Persistence
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<BookingEntity> Bookings { get; set; }
         public DbSet<LaundryShopEntity> LaundryShops { get; set; }
+        public DbSet<BookingItemEntity> BookingItems { get; set; }
+        public DbSet<RatingEntity> Ratings { get; set; }
+        public DbSet<ShopServiceEntity> ShopServices { get; set; }
+        public DbSet<VoucherEntity> Vouchers {  get; set; }
         public DbSet<EmailVerification> EmailVerifications {  get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +31,12 @@ namespace Wash_Wow.Infrastructure.Persistence
             //
             modelBuilder.ApplyConfiguration(new BookingConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new BookingItemConfiguration());
+            modelBuilder.ApplyConfiguration(new LaundryShopConfiguration());
+            modelBuilder.ApplyConfiguration(new RatingConfiguration());
+            modelBuilder.ApplyConfiguration(new ShopServiceConfiguration());
+            modelBuilder.ApplyConfiguration(new VoucherConfiguration());
+
             modelBuilder.ApplyConfiguration(new EmailVerificationConfiguration());
             ConfigureModel(modelBuilder);
         }

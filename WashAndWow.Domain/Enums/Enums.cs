@@ -38,5 +38,12 @@ namespace Wash_Wow.Domain.Enums
             BUSY,
             CLOSE
         }
+
+        //VOUCHER ENUM
+        public enum VoucherType
+        {
+            DISCOUNT_BY_PERCENT,
+            DISCOUNT_BY_AMOUNT
+        }
     }
 }
