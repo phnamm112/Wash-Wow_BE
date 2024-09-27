@@ -563,6 +563,29 @@ namespace WashAndWow.Infrastructure.Migrations
 
                     b.Navigation("Ratings");
                 });
+            modelBuilder.Entity("WashAndWow.Domain.Entities.EmailVerification", b =>
+            {
+                b.Property<string>("UserID")
+                    .HasColumnType("nvarchar(450)");
+
+                b.Property<DateTime>("ExpireTime")
+                    .HasColumnType("datetime");
+
+                b.Property<string>("Token")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(450)");
+
+                b.HasKey("UserID");
+
+                b.HasIndex("Token")
+                    .IsUnique();
+
+                b.HasIndex("UserID")
+                    .IsUnique();
+
+                b.ToTable("EmailVerification", (string)null);
+            });
+
 #pragma warning restore 612, 618
         }
     }

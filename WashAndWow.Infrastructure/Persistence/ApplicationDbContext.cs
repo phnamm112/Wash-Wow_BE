@@ -36,7 +36,6 @@ namespace Wash_Wow.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new RatingConfiguration());
             modelBuilder.ApplyConfiguration(new ShopServiceConfiguration());
             modelBuilder.ApplyConfiguration(new VoucherConfiguration());
-
             modelBuilder.ApplyConfiguration(new EmailVerificationConfiguration());
             ConfigureModel(modelBuilder);
         }
