@@ -10,6 +10,5 @@ namespace WashAndWow.Domain.Repositories
 {
     public interface ILaundryShopRepository : IEFRepository<LaundryShopEntity, LaundryShopEntity>
     {
-        public Task<IPagedResult<LaundryShopEntity>> GetAllShopsPagedAsync(int pageNo, int pageSize, CancellationToken cancellationToken);
     }
 }

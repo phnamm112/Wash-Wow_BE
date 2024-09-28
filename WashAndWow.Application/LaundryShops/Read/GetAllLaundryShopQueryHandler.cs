@@ -27,7 +27,7 @@ namespace WashAndWow.Application.LaundryShops.Read
         public async Task<IPagedResult<LaundryShopDto>> Handle(GetAllLaundryShopsQuery request, CancellationToken cancellationToken)
         {
             // Get paged list of LaundryShopEntity from the repository
-            var pagedResult = await _repository.GetAllShopsPagedAsync(request.PageNo, request.PageSize, cancellationToken);
+            var pagedResult = await _repository.FindAllAsync(x => x.DeletedAt == null, request.PageNo, request.PageSize, cancellationToken);
 
             // Map the entities to DTOs
             var pagedDtoResult = new PagedList<LaundryShopDto>(

@@ -21,9 +21,5 @@ namespace WashAndWow.Infrastructure.Repositories
         {
             _context = dbContext;
         }
-        public async Task<IPagedResult<LaundryShopEntity>> GetAllShopsPagedAsync(int pageNo, int pageSize, CancellationToken cancellationToken)
-        {
-            return await FindAllAsync(pageNo, pageSize, cancellationToken);
-        }
     }
 }
