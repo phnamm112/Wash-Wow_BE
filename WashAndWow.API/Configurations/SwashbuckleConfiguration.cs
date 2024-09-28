@@ -20,6 +20,7 @@ namespace EXE2_Wash_Wow.Configurations
                 {
                     options.SchemaFilter<RequireNonNullablePropertiesSchemaFilter>();
                     options.SupportNonNullableReferenceTypes();
+                    options.UseInlineDefinitionsForEnums();
                     options.CustomSchemaIds(x => x.FullName);
 
                     var apiXmlFile = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");

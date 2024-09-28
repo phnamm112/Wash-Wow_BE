@@ -34,6 +34,7 @@ public static class DependencyInjection
         services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ApplicationDbContext>());
         // repo inject ở đây
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<ILaundryShopRepository, LaundryShopRepository>();
         services.AddScoped<IEmailVerifyRepository, EmailVerifyRepository>();
         return services;
     }
