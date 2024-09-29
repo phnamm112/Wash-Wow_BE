@@ -26,6 +26,7 @@ namespace Wash_Wow.Infrastructure.Persistence
         public DbSet<VoucherEntity> Vouchers {  get; set; }
         public DbSet<FormEntity> Forms { get; set; }
         public DbSet<FormImageEntity> FormImages { get; set; }
+        public DbSet<EmailVerification> EmailVerifications {  get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -39,6 +40,7 @@ namespace Wash_Wow.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new VoucherConfiguration());
             modelBuilder.ApplyConfiguration(new FormConfiguration());
 
+            modelBuilder.ApplyConfiguration(new EmailVerificationConfiguration());
             ConfigureModel(modelBuilder);
         }
         private void ConfigureModel(ModelBuilder modelBuilder)
