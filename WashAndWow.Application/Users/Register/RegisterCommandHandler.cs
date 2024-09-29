@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Entities;
 using Wash_Wow.Domain.Repositories;
+using WashAndWow.Domain.Entities;
+using WashAndWow.Domain.Repositories;
 using static Wash_Wow.Domain.Enums.Enums;
 
 namespace Wash_Wow.Application.Users.Register
@@ -15,9 +17,12 @@ namespace Wash_Wow.Application.Users.Register
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
     {
         private readonly IUserRepository _userRepository;
-        public RegisterCommandHandler(IUserRepository userRepository)
+        private readonly IEmailVerifyRepository _emailVerifyRepository;
+        const string baseUrl = "http://example.com/verify-email";
+        public RegisterCommandHandler(IUserRepository userRepository, IEmailVerifyRepository emailRepository)
         {
             _userRepository = userRepository;
+            _emailVerifyRepository = emailRepository;
         }
         public async Task<string> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
@@ -44,6 +49,19 @@ namespace Wash_Wow.Application.Users.Register
             _userRepository.Add(user);
             // dùng token này để xác thực mail
             var token = Guid.NewGuid().ToString();
+            var EmailVerify = new EmailVerification
+            {
+                UserID = user.ID,
+                Token = token,
+                ExpireTime = DateTime.UtcNow.AddHours(24)
+            };
+            _emailVerifyRepository.Add(EmailVerify);// Save the email verification entry
+
+            // Construct the confirmation URL
+            var confirmationUrl = $"{baseUrl}?token={token}";
+
+            // Send the confirmation email
+            await _emailVerifyRepository.SendConfirmationEmailAsync(user.Email, confirmationUrl);
             // xử lý gửi mail - Nhân làm nhé
             await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
             return user.ID;

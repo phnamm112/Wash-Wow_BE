@@ -39,6 +39,8 @@ public static class DependencyInjection
         services.AddTransient<IFormTemplateRepository, FormTemplateRepository>();
         services.AddTransient<IFormTemplateContentRepository, FormTemplateContentRepository>();
         services.AddTransient<IFormFieldValueRepository, FormFieldValueRepository>();
+        services.AddTransient<ILaundryShopRepository, LaundryShopRepository>();
+        services.AddScoped<IEmailVerifyRepository, EmailVerifyRepository>();
         return services;
     }
 }
