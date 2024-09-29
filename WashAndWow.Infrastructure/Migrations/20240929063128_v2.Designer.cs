@@ -12,7 +12,7 @@ using Wash_Wow.Infrastructure.Persistence;
 namespace WashAndWow.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240929025355_v2")]
+    [Migration("20240929063128_v2")]
     partial class v2
     {
         /// <inheritdoc />
@@ -83,14 +83,85 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.ToTable("BookingItem");
                 });
 
+            modelBuilder.Entity("WashAndWow.Domain.Entities.ConfigTable.FormTemplateContentEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FormTemplateID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastestUpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdaterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FormTemplateID");
+
+                    b.ToTable("FormTemplateContent");
+                });
+
+            modelBuilder.Entity("WashAndWow.Domain.Entities.ConfigTable.FormTemplateEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastestUpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdaterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("FormTemplate");
+                });
+
             modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>
                 {
                     b.Property<string>("ID")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -105,13 +176,13 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.Property<string>("DeleterID")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("FormTemplateID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LastestUpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -122,7 +193,52 @@ namespace WashAndWow.Infrastructure.Migrations
 
                     b.HasIndex("CreatorID");
 
+                    b.HasIndex("FormTemplateID");
+
                     b.ToTable("Form");
+                });
+
+            modelBuilder.Entity("WashAndWow.Domain.Entities.FormFieldValueEntity", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FieldValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FormID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("FormTemplateContentID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastestUpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdaterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FormID");
+
+                    b.HasIndex("FormTemplateContentID");
+
+                    b.ToTable("FormFieldValue");
                 });
 
             modelBuilder.Entity("WashAndWow.Domain.Entities.FormImageEntity", b =>
@@ -533,6 +649,17 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.Navigation("ShopService");
                 });
 
+            modelBuilder.Entity("WashAndWow.Domain.Entities.ConfigTable.FormTemplateContentEntity", b =>
+                {
+                    b.HasOne("WashAndWow.Domain.Entities.ConfigTable.FormTemplateEntity", "FormTemplate")
+                        .WithMany("FormTemplateContents")
+                        .HasForeignKey("FormTemplateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FormTemplate");
+                });
+
             modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>
                 {
                     b.HasOne("Wash_Wow.Domain.Entities.UserEntity", "Sender")
@@ -541,7 +668,34 @@ namespace WashAndWow.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("WashAndWow.Domain.Entities.ConfigTable.FormTemplateEntity", "FormTemplate")
+                        .WithMany()
+                        .HasForeignKey("FormTemplateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FormTemplate");
+
                     b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("WashAndWow.Domain.Entities.FormFieldValueEntity", b =>
+                {
+                    b.HasOne("WashAndWow.Domain.Entities.FormEntity", "Form")
+                        .WithMany("FieldValues")
+                        .HasForeignKey("FormID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WashAndWow.Domain.Entities.ConfigTable.FormTemplateContentEntity", "FormTemplateContent")
+                        .WithMany()
+                        .HasForeignKey("FormTemplateContentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Form");
+
+                    b.Navigation("FormTemplateContent");
                 });
 
             modelBuilder.Entity("WashAndWow.Domain.Entities.FormImageEntity", b =>
@@ -549,7 +703,7 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.HasOne("WashAndWow.Domain.Entities.FormEntity", "Form")
                         .WithMany("FormImages")
                         .HasForeignKey("FormID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Form");
@@ -634,8 +788,15 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("WashAndWow.Domain.Entities.ConfigTable.FormTemplateEntity", b =>
+                {
+                    b.Navigation("FormTemplateContents");
+                });
+
             modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>
                 {
+                    b.Navigation("FieldValues");
+
                     b.Navigation("FormImages");
                 });
 

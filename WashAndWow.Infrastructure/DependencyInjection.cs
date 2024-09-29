@@ -36,6 +36,9 @@ public static class DependencyInjection
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IFormRepository, FormRepository>();
         services.AddTransient<IFormImageRepository, FormImageRepository>();
+        services.AddTransient<IFormTemplateRepository, FormTemplateRepository>();
+        services.AddTransient<IFormTemplateContentRepository, FormTemplateContentRepository>();
+        services.AddTransient<IFormFieldValueRepository, FormFieldValueRepository>();
         return services;
     }
 }

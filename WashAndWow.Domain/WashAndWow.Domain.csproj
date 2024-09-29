@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\ConfigTable\" />
     <Folder Include="Functions\" />
   </ItemGroup>
 
