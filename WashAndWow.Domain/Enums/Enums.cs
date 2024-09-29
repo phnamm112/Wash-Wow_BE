@@ -13,6 +13,7 @@ namespace Wash_Wow.Domain.Enums
         {
             Admin,
             Customer,
+            ShopOwner
         }
         public enum UserStatus
         {
