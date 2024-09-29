@@ -19,8 +19,9 @@ namespace EXE2_Wash_Wow.Configurations
                 options =>
                 {
                     options.SchemaFilter<RequireNonNullablePropertiesSchemaFilter>();
+                    options.SchemaFilter<EnumSchemaFilter>();
                     options.SupportNonNullableReferenceTypes();
-                    options.CustomSchemaIds(x => x.FullName);
+                    options.CustomSchemaIds(s => s.FullName?.Replace("+", "."));
 
                     var apiXmlFile = Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
                     if (File.Exists(apiXmlFile))
@@ -56,6 +57,9 @@ namespace EXE2_Wash_Wow.Configurations
                         {
                             { securityScheme, Array.Empty<string>() }
                         });
+
+                    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
                 });
             return services;
         }

@@ -12,8 +12,8 @@ using Wash_Wow.Infrastructure.Persistence;
 namespace WashAndWow.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240923064808_v1")]
-    partial class v1
+    [Migration("20240929025355_v2")]
+    partial class v2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -81,6 +81,86 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.HasIndex("ServicesID");
 
                     b.ToTable("BookingItem");
+                });
+
+            modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastestUpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdaterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CreatorID");
+
+                    b.ToTable("Form");
+                });
+
+            modelBuilder.Entity("WashAndWow.Domain.Entities.FormImageEntity", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FormID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("LastestUpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdaterID")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FormID");
+
+                    b.ToTable("FormImage");
                 });
 
             modelBuilder.Entity("WashAndWow.Domain.Entities.RatingEntity", b =>
@@ -453,6 +533,28 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.Navigation("ShopService");
                 });
 
+            modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>
+                {
+                    b.HasOne("Wash_Wow.Domain.Entities.UserEntity", "Sender")
+                        .WithMany("SentForms")
+                        .HasForeignKey("CreatorID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
+                });
+
+            modelBuilder.Entity("WashAndWow.Domain.Entities.FormImageEntity", b =>
+                {
+                    b.HasOne("WashAndWow.Domain.Entities.FormEntity", "Form")
+                        .WithMany("FormImages")
+                        .HasForeignKey("FormID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Form");
+                });
+
             modelBuilder.Entity("WashAndWow.Domain.Entities.RatingEntity", b =>
                 {
                     b.HasOne("Wash_Wow.Domain.Entities.UserEntity", "User")
@@ -532,6 +634,11 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>
+                {
+                    b.Navigation("FormImages");
+                });
+
             modelBuilder.Entity("WashAndWow.Domain.Entities.ShopServiceEntity", b =>
                 {
                     b.Navigation("BookingItems");
@@ -565,6 +672,8 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.Navigation("LaundryShops");
 
                     b.Navigation("Ratings");
+
+                    b.Navigation("SentForms");
                 });
 #pragma warning restore 612, 618
         }
