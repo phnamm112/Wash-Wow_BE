@@ -12,7 +12,7 @@ using Wash_Wow.Infrastructure.Persistence;
 namespace WashAndWow.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240929063128_v2")]
+    [Migration("20240929095255_v2")]
     partial class v2
     {
         /// <inheritdoc />
@@ -156,6 +156,22 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("FormTemplate");
+                });
+
+            modelBuilder.Entity("WashAndWow.Domain.Entities.EmailVerification", b =>
+                {
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("ExpireTime")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("UserID", "Token");
+
+                    b.ToTable("EmailVerification", (string)null);
                 });
 
             modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>

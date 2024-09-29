@@ -44,7 +44,6 @@ namespace Wash_Wow.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new VoucherConfiguration());
             modelBuilder.ApplyConfiguration(new FormConfiguration());
             modelBuilder.ApplyConfiguration(new FormTemplateConfiguration());
-
             modelBuilder.ApplyConfiguration(new EmailVerificationConfiguration());
             ConfigureModel(modelBuilder);
         }
