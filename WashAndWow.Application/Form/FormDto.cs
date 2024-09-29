@@ -14,6 +14,7 @@ namespace WashAndWow.Application.Form
 {
     public class FormDto : IMapFrom<FormEntity>
     {
+        public string ID {  get; set; }
         public string Status { get; set; }
         public int FormTemplateID {  get; set; }
         public string Title {  get; set; }
