@@ -56,6 +56,7 @@ namespace WashAndWow.Application.Form.SendForm
                 };
                 form.FieldValues.Add(formFieldValue);
             }
+            _formRepository.Add(form);
 
             foreach (var item in request.ImageUrl)
             {
@@ -66,10 +67,9 @@ namespace WashAndWow.Application.Form.SendForm
                     CreatedAt = DateTime.Now,
                     CreatorID = _currentUserService.UserId,
                 };
-                form.FormImages.Add(formImageItem);
                 _formImageRepository.Add(formImageItem);
-            }
-            _formRepository.Add(form);
+                form.FormImages.Add(formImageItem);                        
+            }            
             return await _formRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Create Success" : "Create Fail";
         }
     }

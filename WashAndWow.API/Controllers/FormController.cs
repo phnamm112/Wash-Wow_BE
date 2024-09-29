@@ -5,6 +5,7 @@ using System.Net.Mime;
 using Wash_Wow.Application.Common.Interfaces;
 using WashAndWow.Application.Form;
 using WashAndWow.Application.Form.ApprovalForm;
+using WashAndWow.Application.Form.GetAll;
 using WashAndWow.Application.Form.GetFormByID;
 using WashAndWow.Application.Form.SendForm;
 using WashAndWow.Application.Users.AssignRole;
@@ -72,6 +73,20 @@ namespace WashAndWow.API.Controllers
         {
             var result = await _mediator.Send(new GetFormByIDQuery(id: id), cancellationToken);
             return result != null ? Ok(new JsonResponse<FormDto>(result)) : NotFound();
+        }
+
+        [HttpGet]
+        [Route("/forms")]
+        [ProducesResponseType(typeof(JsonResponse<List<FormDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<FormDto>> GetAllForms(CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetAllFormQuery(), cancellationToken);
+            return result != null ? Ok(new JsonResponse<List<FormDto>>(result)) : NotFound();
         }
     }
 }
