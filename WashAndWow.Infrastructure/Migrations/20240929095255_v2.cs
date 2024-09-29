@@ -12,6 +12,19 @@ namespace WashAndWow.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "EmailVerification",
+                columns: table => new
+                {
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ExpireTime = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmailVerification", x => new { x.UserID, x.Token });
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FormTemplate",
                 columns: table => new
                 {
@@ -500,6 +513,9 @@ namespace WashAndWow.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BookingItem");
+
+            migrationBuilder.DropTable(
+                name: "EmailVerification");
 
             migrationBuilder.DropTable(
                 name: "FormFieldValue");

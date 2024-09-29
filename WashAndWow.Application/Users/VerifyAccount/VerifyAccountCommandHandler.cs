@@ -4,43 +4,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
+using static Wash_Wow.Domain.Enums.Enums;
 
-namespace WashAndWow.Application.Users.ChangePassword
+namespace WashAndWow.Application.Users.VerifyAccount
 {
-    public class ResetForgotPasswordCommandHandler : IRequestHandler<ResetForgotPasswordCommand, string>
+    public class VerifyAccountCommandHandler : IRequestHandler<VerifyAccountCommand, string>
     {
-        private readonly IUserRepository _userRepository;
-        private readonly ICurrentUserService _currentUserService;
         private readonly IEmailVerifyRepository _emailVerifyRepository;
-        public ResetForgotPasswordCommandHandler(IUserRepository userRepository
-            , ICurrentUserService currentUserService
-            , IEmailVerifyRepository emailVerifyRepository)
+        private readonly IUserRepository _userRepository;
+        public VerifyAccountCommandHandler(IEmailVerifyRepository emailVerifyRepository, IUserRepository userRepository)
         {
-            _userRepository = userRepository;
-            _currentUserService = currentUserService;
             _emailVerifyRepository = emailVerifyRepository;
+            _userRepository = userRepository;
         }
-        public async Task<string> Handle(ResetForgotPasswordCommand request, CancellationToken cancellationToken)
+
+        public async Task<string> Handle(VerifyAccountCommand request, CancellationToken cancellationToken)
         {
-            // TODO: handle logic
             var validToken = await _emailVerifyRepository.FindAsync(x => x.Token == request.Token && x.ExpireTime > DateTime.UtcNow, cancellationToken);
             if (validToken == null)
             {
-                return "Token is not valid";
+                return("Token is not valid");
             }
             var user = await _userRepository.FindAsync(x => x.ID == validToken.UserID && x.DeletedAt == null, cancellationToken);
             if (user == null)
             {
                 throw new NotFoundException("User is not exist");
             }
-            user.PasswordHash = _userRepository.HashPassword(request.NewPassword);
+            user.Status = UserStatus.VERIFIED;
             _emailVerifyRepository.Remove(validToken);
             _userRepository.Update(user);
-
             return await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success" : "Failed";
         }
     }

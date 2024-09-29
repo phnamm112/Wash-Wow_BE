@@ -1,5 +1,6 @@
 ﻿using Castle.Core.Smtp;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,9 @@ namespace Wash_Wow.Application.Users.Register
     {
         private readonly IUserRepository _userRepository;
         private readonly IEmailVerifyRepository _emailVerifyRepository;
-        const string baseUrl = "http://example.com/verify-email";
-        public RegisterCommandHandler(IUserRepository userRepository, IEmailVerifyRepository emailRepository)
+        public RegisterCommandHandler(IUserRepository userRepository
+            , IEmailVerifyRepository emailRepository
+            , IOptions<MailSettings> emailSettings)
         {
             _userRepository = userRepository;
             _emailVerifyRepository = emailRepository;
@@ -44,7 +46,8 @@ namespace Wash_Wow.Application.Users.Register
                 FullName = request.FullName,
                 PasswordHash = _userRepository.HashPassword(request.Password),
                 Role = Role.Customer,
-                Status = UserStatus.UNVERIFY
+                //FIX CỨNG SAU NÀY DONE REDIRECT EMAIL THÌ SỬA LẠI
+                Status = UserStatus.VERIFIED,
             };
             _userRepository.Add(user);
             // dùng token này để xác thực mail
@@ -57,6 +60,7 @@ namespace Wash_Wow.Application.Users.Register
             };
             _emailVerifyRepository.Add(EmailVerify);// Save the email verification entry
 
+            string baseUrl = "http://example.com/verify-email";
             // Construct the confirmation URL
             var confirmationUrl = $"{baseUrl}?token={token}";
 
