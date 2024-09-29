@@ -13,6 +13,7 @@ namespace Wash_Wow.Domain.Enums
         {
             Admin,
             Customer,
+            ShopOwner
         }
         public enum UserStatus
         {
@@ -44,6 +45,14 @@ namespace Wash_Wow.Domain.Enums
         {
             DISCOUNT_BY_PERCENT,
             DISCOUNT_BY_AMOUNT
+        }
+
+        //FORM ENUM
+        public enum FormStatus
+        {
+            PENDING,
+            APPROVED,
+            REJECTED
         }
     }
 }

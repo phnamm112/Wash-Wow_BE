@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WashAndWow.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class v1 : Migration
+    public partial class v2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,32 @@ namespace WashAndWow.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Form",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatorID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdaterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastestUpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Form", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Form_User_CreatorID",
+                        column: x => x.CreatorID,
+                        principalTable: "User",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,6 +121,31 @@ namespace WashAndWow.Infrastructure.Migrations
                         principalTable: "User",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FormImage",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FormID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatorID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdaterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastestUpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormImage", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_FormImage_Form_FormID",
+                        column: x => x.FormID,
+                        principalTable: "Form",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -278,6 +329,16 @@ namespace WashAndWow.Infrastructure.Migrations
                 column: "ServicesID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Form_CreatorID",
+                table: "Form",
+                column: "CreatorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormImage_FormID",
+                table: "FormImage",
+                column: "FormID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LaundryShop_Address",
                 table: "LaundryShop",
                 column: "Address",
@@ -339,6 +400,9 @@ namespace WashAndWow.Infrastructure.Migrations
                 name: "BookingItem");
 
             migrationBuilder.DropTable(
+                name: "FormImage");
+
+            migrationBuilder.DropTable(
                 name: "ShopRating");
 
             migrationBuilder.DropTable(
@@ -349,6 +413,9 @@ namespace WashAndWow.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ShopService");
+
+            migrationBuilder.DropTable(
+                name: "Form");
 
             migrationBuilder.DropTable(
                 name: "Voucher");

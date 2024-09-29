@@ -31,5 +31,6 @@ namespace Wash_Wow.Domain.Entities
         public virtual ICollection<RatingEntity> Ratings { get; set; }   // List rating đã tạo
         public virtual ICollection<VoucherEntity> CreatedVouchers {  get; set; }   // List voucher đã tạo
         public virtual ICollection<VoucherEntity> UsedVouchers {  get; set; }     // List voucher đã sử dụng
+        public virtual ICollection<FormEntity> SentForms { get; set; }  // ListForm đã gửi
     }
 }

@@ -24,6 +24,8 @@ namespace Wash_Wow.Infrastructure.Persistence
         public DbSet<RatingEntity> Ratings { get; set; }
         public DbSet<ShopServiceEntity> ShopServices { get; set; }
         public DbSet<VoucherEntity> Vouchers {  get; set; }
+        public DbSet<FormEntity> Forms { get; set; }
+        public DbSet<FormImageEntity> FormImages { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,6 +37,7 @@ namespace Wash_Wow.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new RatingConfiguration());
             modelBuilder.ApplyConfiguration(new ShopServiceConfiguration());
             modelBuilder.ApplyConfiguration(new VoucherConfiguration());
+            modelBuilder.ApplyConfiguration(new FormConfiguration());
 
             ConfigureModel(modelBuilder);
         }

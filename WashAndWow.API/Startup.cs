@@ -3,6 +3,9 @@ using EXE2_Wash_Wow.Filters;
 using Wash_Wow.Infrastructure;
 using Wash_Wow.Application;
 using Serilog;
+using System.Reflection;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace EXE2_Wash_Wow
 {
@@ -21,6 +24,10 @@ namespace EXE2_Wash_Wow
                 opt =>
                 {
                     opt.Filters.Add<ExceptionFilter>();
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 });
             services.AddApplication(Configuration);
             services.ConfigureApplicationSecurity(Configuration);
@@ -35,9 +42,8 @@ namespace EXE2_Wash_Wow
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 );
-            });
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-
+            });           
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
