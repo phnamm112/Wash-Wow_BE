@@ -17,12 +17,6 @@ namespace WashAndWow.Application.Form.SendForm
         private void ConfigureValidationRules()
         {
 
-            RuleFor(v => v.Title)
-                .NotEmpty().NotNull().WithMessage("Title is required");
-
-            RuleFor(v => v.Content)
-                .NotEmpty().NotNull().WithMessage("Content is required");
-
         }
     }
 }

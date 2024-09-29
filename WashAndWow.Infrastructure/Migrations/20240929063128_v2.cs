@@ -12,6 +12,25 @@ namespace WashAndWow.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "FormTemplate",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatorID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdaterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastestUpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormTemplate", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -36,13 +55,38 @@ namespace WashAndWow.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FormTemplateContent",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FormTemplateID = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatorID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdaterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastestUpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormTemplateContent", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_FormTemplateContent_FormTemplate_FormTemplateID",
+                        column: x => x.FormTemplateID,
+                        principalTable: "FormTemplate",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Form",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FormTemplateID = table.Column<int>(type: "int", nullable: false),
                     CreatorID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdaterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -53,6 +97,12 @@ namespace WashAndWow.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Form", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Form_FormTemplate_FormTemplateID",
+                        column: x => x.FormTemplateID,
+                        principalTable: "FormTemplate",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Form_User_CreatorID",
                         column: x => x.CreatorID,
@@ -124,6 +174,38 @@ namespace WashAndWow.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FormFieldValue",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FormID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FormTemplateContentID = table.Column<int>(type: "int", nullable: false),
+                    FieldValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatorID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdaterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastestUpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeleterID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormFieldValue", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_FormFieldValue_FormTemplateContent_FormTemplateContentID",
+                        column: x => x.FormTemplateContentID,
+                        principalTable: "FormTemplateContent",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FormFieldValue_Form_FormID",
+                        column: x => x.FormID,
+                        principalTable: "Form",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FormImage",
                 columns: table => new
                 {
@@ -145,7 +227,7 @@ namespace WashAndWow.Infrastructure.Migrations
                         column: x => x.FormID,
                         principalTable: "Form",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -334,9 +416,29 @@ namespace WashAndWow.Infrastructure.Migrations
                 column: "CreatorID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Form_FormTemplateID",
+                table: "Form",
+                column: "FormTemplateID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormFieldValue_FormID",
+                table: "FormFieldValue",
+                column: "FormID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormFieldValue_FormTemplateContentID",
+                table: "FormFieldValue",
+                column: "FormTemplateContentID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_FormImage_FormID",
                 table: "FormImage",
                 column: "FormID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FormTemplateContent_FormTemplateID",
+                table: "FormTemplateContent",
+                column: "FormTemplateID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LaundryShop_Address",
@@ -400,6 +502,9 @@ namespace WashAndWow.Infrastructure.Migrations
                 name: "BookingItem");
 
             migrationBuilder.DropTable(
+                name: "FormFieldValue");
+
+            migrationBuilder.DropTable(
                 name: "FormImage");
 
             migrationBuilder.DropTable(
@@ -415,6 +520,9 @@ namespace WashAndWow.Infrastructure.Migrations
                 name: "ShopService");
 
             migrationBuilder.DropTable(
+                name: "FormTemplateContent");
+
+            migrationBuilder.DropTable(
                 name: "Form");
 
             migrationBuilder.DropTable(
@@ -422,6 +530,9 @@ namespace WashAndWow.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "LaundryShop");
+
+            migrationBuilder.DropTable(
+                name: "FormTemplate");
 
             migrationBuilder.DropTable(
                 name: "User");

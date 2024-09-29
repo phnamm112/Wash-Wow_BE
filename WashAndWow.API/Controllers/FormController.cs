@@ -3,7 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using Wash_Wow.Application.Common.Interfaces;
+using WashAndWow.Application.Form;
 using WashAndWow.Application.Form.ApprovalForm;
+using WashAndWow.Application.Form.GetFormByID;
 using WashAndWow.Application.Form.SendForm;
 using WashAndWow.Application.Users.AssignRole;
 
@@ -54,6 +56,22 @@ namespace WashAndWow.API.Controllers
             command.FormID = formID;
             var result = await _mediator.Send(command, cancellationToken);
             return Ok(new JsonResponse<string>(result));
+        }
+
+        [HttpGet]
+        [Route("/form/{id}")]
+        [ProducesResponseType(typeof(JsonResponse<FormDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<FormDto>> GetFormByID(
+                 [FromRoute] string id,
+           CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(new GetFormByIDQuery(id: id), cancellationToken);
+            return result != null ? Ok(new JsonResponse<FormDto>(result)) : NotFound();
         }
     }
 }
