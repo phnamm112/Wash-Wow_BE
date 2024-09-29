@@ -17,6 +17,7 @@ namespace WashAndWow.Application.Form
         public string Status { get; set; }
         public int FormTemplateID {  get; set; }
         public string Title {  get; set; }
+        public List<FormImageDto> FormImages {  get; set; }
         public List<FieldValueDto> FieldValues {  get; set; }
 
         public FormDto()
