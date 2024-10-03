@@ -1,11 +1,5 @@
-﻿using Castle.Core.Smtp;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Entities;
 using Wash_Wow.Domain.Repositories;

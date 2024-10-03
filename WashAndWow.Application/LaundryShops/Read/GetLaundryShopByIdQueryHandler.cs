@@ -1,12 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wash_Wow.Domain.Entities;
-using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.LaundryShops.Read
@@ -34,5 +27,4 @@ namespace WashAndWow.Application.LaundryShops.Read
             return _mapper.Map<LaundryShopDto>(shop);
         }
     }
-
 }

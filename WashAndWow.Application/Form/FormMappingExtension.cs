@@ -1,17 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wash_Wow.Application.Users;
-using Wash_Wow.Domain.Entities;
 using WashAndWow.Domain.Entities;
 
 namespace WashAndWow.Application.Form
 {
-    public static class FormMappingExtension 
+    public static class FormMappingExtension
     {
         public static FormDto MapToFormDto(this FormEntity projectFrom, IMapper mapper)
             => mapper.Map<FormDto>(projectFrom);

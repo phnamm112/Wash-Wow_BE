@@ -1,9 +1,4 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Application.Common.Mappings;
 using Wash_Wow.Domain.Entities;
 using static Wash_Wow.Domain.Enums.Enums;
@@ -25,7 +20,7 @@ namespace Wash_Wow.Application.Users
         }
         public UserDto()
         {
-            
+
         }
         public UserDto(string id, string fullName, string email, string phoneNumber, Role role)
         {

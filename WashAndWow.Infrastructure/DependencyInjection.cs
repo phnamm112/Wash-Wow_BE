@@ -1,14 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Interfaces;
-using Wash_Wow.Infrastructure.Persistence;
 using Wash_Wow.Domain.Repositories;
+using Wash_Wow.Infrastructure.Persistence;
 using Wash_Wow.Infrastructure.Repositories;
 using WashAndWow.Domain.Repositories;
 using WashAndWow.Infrastructure.Repositories;
@@ -41,6 +36,11 @@ public static class DependencyInjection
         services.AddTransient<IFormFieldValueRepository, FormFieldValueRepository>();
         services.AddTransient<ILaundryShopRepository, LaundryShopRepository>();
         services.AddScoped<IEmailVerifyRepository, EmailVerifyRepository>();
+        services.AddTransient<IShopServiceRepository, ShopServiceRepository>();
+        services.AddTransient<IBookingItemRepository, BookingItemRepository>();
+        services.AddTransient<IBookingRepository, BookingRepository>();
+        services.AddTransient<IVoucherRepository, VoucherRepository>();
+        services.AddTransient<IRatingRepository, RatingRepository>();
         return services;
     }
 }

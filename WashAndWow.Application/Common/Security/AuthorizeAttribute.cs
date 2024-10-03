@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Wash_Wow.Application.Common.Security
+﻿namespace Wash_Wow.Application.Common.Security
 {
     /// <summary>
     /// Specifies the class this attribute is applied to requires authorization.

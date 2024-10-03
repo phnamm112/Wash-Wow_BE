@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Interfaces;
 using Wash_Wow.Domain.Entities;
 using WashAndWow.Domain.Entities;
@@ -24,13 +19,13 @@ namespace Wash_Wow.Infrastructure.Persistence
         public DbSet<BookingItemEntity> BookingItems { get; set; }
         public DbSet<RatingEntity> Ratings { get; set; }
         public DbSet<ShopServiceEntity> ShopServices { get; set; }
-        public DbSet<VoucherEntity> Vouchers {  get; set; }
+        public DbSet<VoucherEntity> Vouchers { get; set; }
         public DbSet<FormEntity> Forms { get; set; }
         public DbSet<FormImageEntity> FormImages { get; set; }
         public DbSet<FormTemplateEntity> FormTemplates { get; set; }
         public DbSet<FormTemplateContentEntity> FormTemplateContents { get; set; }
         public DbSet<FormFieldValueEntity> FormFieldValues { get; set; }
-        public DbSet<EmailVerification> EmailVerifications {  get; set; } 
+        public DbSet<EmailVerification> EmailVerifications { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

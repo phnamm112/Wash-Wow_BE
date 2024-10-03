@@ -2,12 +2,6 @@
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wash_Wow.Domain.Entities;
 using Wash_Wow.Infrastructure.Persistence;
 using Wash_Wow.Infrastructure.Repositories;
 using WashAndWow.Domain.Entities;
@@ -20,7 +14,7 @@ namespace WashAndWow.Infrastructure.Repositories
         private readonly MailSettings _mailSettings;
         private readonly ApplicationDbContext _context;
 
-        public EmailVerifyRepository(ApplicationDbContext dbContext, IMapper mapper, IOptions<MailSettings> mailSettings): base(dbContext, mapper)
+        public EmailVerifyRepository(ApplicationDbContext dbContext, IMapper mapper, IOptions<MailSettings> mailSettings) : base(dbContext, mapper)
         {
             _context = dbContext;
             _mailSettings = mailSettings.Value;

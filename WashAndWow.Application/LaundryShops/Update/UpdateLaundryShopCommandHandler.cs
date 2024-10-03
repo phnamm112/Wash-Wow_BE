@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Interfaces;
-using Wash_Wow.Domain.Entities;
-using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.LaundryShops.Update

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using Wash_Wow.Domain.Entities;
 using Wash_Wow.Domain.Entities.Base;
 using WashAndWow.Domain.Entities.ConfigTable;
@@ -19,7 +14,7 @@ namespace WashAndWow.Domain.Entities
         [ForeignKey(nameof(CreatorID))]
         public virtual UserEntity Sender { get; set; }
 
-        public required int FormTemplateID {  get; set; }
+        public required int FormTemplateID { get; set; }
         [ForeignKey(nameof(FormTemplateID))]
         public virtual FormTemplateEntity FormTemplate { get; set; }
 

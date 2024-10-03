@@ -1,6 +1,5 @@
 ﻿using EXE2_Wash_Wow.Controllers;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using Wash_Wow.Domain.Repositories;
@@ -33,8 +32,6 @@ namespace WashAndWow.API.Controllers
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(command, cancellationToken);
-
-            // return CreatedAtAction(nameof(GetLaundryShopById), new { id = result }, new JsonResponse<string>(result));
             return Ok(new JsonResponse<string>(result));
         }
 
@@ -43,9 +40,10 @@ namespace WashAndWow.API.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<LaundryShopDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<JsonResponse<LaundryShopDto>>> GetLaundryShopById(string id, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<JsonResponse<LaundryShopDto>>> GetLaundryShopById(string id,
+            CancellationToken cancellationToken = default)
         {
-            var query = new GetLaundryShopByIdQuery(id); 
+            var query = new GetLaundryShopByIdQuery(id);
             var result = await _mediator.Send(query, cancellationToken);
 
             if (result == null)
@@ -62,7 +60,7 @@ namespace WashAndWow.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<IPagedResult<LaundryShopDto>>>> GetLaundryShops(
             [FromQuery] GetAllLaundryShopsQuery query,
-            CancellationToken cancellationToken = default) 
+            CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new JsonResponse<IPagedResult<LaundryShopDto>>(result));
@@ -75,8 +73,9 @@ namespace WashAndWow.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<JsonResponse<string>>> UpdateLaundryShop(
             [FromBody] UpdateLaundryShopCommand command,
-            CancellationToken cancellationToken = default) {
-            
+            CancellationToken cancellationToken = default)
+        {
+
             var result = await _mediator.Send(command, cancellationToken);
 
             if (result == null)
@@ -94,7 +93,8 @@ namespace WashAndWow.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteLaundryShop(string id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> DeleteLaundryShop(string id,
+            CancellationToken cancellationToken = default)
         {
             var command = new DeleteLaundryShopCommand(id);
             var result = await _mediator.Send(command, cancellationToken);
