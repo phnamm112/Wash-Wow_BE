@@ -1,11 +1,8 @@
 ﻿using EXE2_Wash_Wow.Controllers;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
-using Wash_Wow.Application.Common.Interfaces;
 using WashAndWow.Application.Users.AssignRole;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WashAndWow.API.Controllers
 {

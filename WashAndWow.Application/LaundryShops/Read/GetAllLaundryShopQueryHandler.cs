@@ -1,15 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wash_Wow.Domain.Entities;
 using Wash_Wow.Domain.Repositories;
 using Wash_Wow.Infrastructure.Repositories;
 using WashAndWow.Domain.Repositories;
-using WashAndWow.Infrastructure.Repositories;
 
 namespace WashAndWow.Application.LaundryShops.Read
 {

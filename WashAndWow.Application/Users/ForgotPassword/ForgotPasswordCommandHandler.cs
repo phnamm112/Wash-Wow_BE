@@ -1,10 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Entities;
@@ -15,7 +9,7 @@ namespace WashAndWow.Application.Users.ForgotPassword
     public class ForgotPasswordCommandHandler : IRequestHandler<ForgotPasswordCommand, string>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IEmailVerifyRepository _emailVerifyRepository;       
+        private readonly IEmailVerifyRepository _emailVerifyRepository;
         public ForgotPasswordCommandHandler(IUserRepository userRepository
             , IEmailVerifyRepository emailVerifyRepository)
         {
@@ -43,7 +37,7 @@ namespace WashAndWow.Application.Users.ForgotPassword
             await _emailVerifyRepository.SendTokenResetPassword(user.Email, token);
 
             return await _userRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success. Please check your mail" : "Failed";
-            
+
         }
 
         private string GenerateToken(int length = 6)

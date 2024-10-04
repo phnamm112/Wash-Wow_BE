@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
@@ -26,7 +21,7 @@ namespace WashAndWow.Application.Users.VerifyAccount
             var validToken = await _emailVerifyRepository.FindAsync(x => x.Token == request.Token && x.ExpireTime > DateTime.UtcNow, cancellationToken);
             if (validToken == null)
             {
-                return("Token is not valid");
+                return ("Token is not valid");
             }
             var user = await _userRepository.FindAsync(x => x.ID == validToken.UserID && x.DeletedAt == null, cancellationToken);
             if (user == null)

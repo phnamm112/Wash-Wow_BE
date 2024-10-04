@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WashAndWow.Domain.Entities;
 
 namespace WashAndWow.Application.Form
 {
-    public static class FormFieldValueMappingExtension 
+    public static class FormFieldValueMappingExtension
     {
         public static FieldValueDto MapToFieldValueDto(this FormFieldValueEntity projectFrom, IMapper mapper)
             => mapper.Map<FieldValueDto>(projectFrom);

@@ -1,8 +1,7 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System.Diagnostics;
-using System;
 using Wash_Wow.Application.Common.Exceptions;
 using Wash_Wow.Domain.Common.Exceptions;
 

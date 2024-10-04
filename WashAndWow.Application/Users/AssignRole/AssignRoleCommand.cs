@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Application.Common.Interfaces;
 using static Wash_Wow.Domain.Enums.Enums;
 
@@ -13,14 +8,14 @@ namespace WashAndWow.Application.Users.AssignRole
     {
         public AssignRoleCommand()
         {
-            
+
         }
         public AssignRoleCommand(string userID, Role role)
         {
             Role = role;
             UserID = userID;
         }
-        public string UserID {  get; set; }
-        public Role Role {  get; set; } 
+        public string UserID { get; set; }
+        public Role Role { get; set; }
     }
 }

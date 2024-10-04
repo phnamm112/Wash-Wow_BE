@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Common.Exceptions;
 using WashAndWow.Domain.Repositories;
 
@@ -38,7 +33,7 @@ namespace WashAndWow.Application.Form.GetFormByID
             {
                 throw new NotFoundException("Form is not exist");
             }
-            
+
             var contents = await _formTemplateContentRepository.FindAllToDictionaryAsync(x => x.DeletedAt == null && x.FormTemplateID == exist.FormTemplateID, x => x.ID, x => x.Name, cancellationToken);
             return exist.MapToFormDto(_mapper, exist.FormTemplate.Name, contents);
         }

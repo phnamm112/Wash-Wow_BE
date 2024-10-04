@@ -1,6 +1,6 @@
 using EXE2_Wash_Wow;
-using Serilog.Events;
 using Serilog;
+using Serilog.Events;
 
 public static class Program
 {

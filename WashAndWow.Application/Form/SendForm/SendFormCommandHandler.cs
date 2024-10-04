@@ -1,13 +1,7 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
 using WashAndWow.Domain.Entities;
-using WashAndWow.Domain.Entities.ConfigTable;
 using WashAndWow.Domain.Repositories;
 using static Wash_Wow.Domain.Enums.Enums;
 
@@ -62,14 +56,14 @@ namespace WashAndWow.Application.Form.SendForm
             {
                 FormImageEntity formImageItem = new FormImageEntity
                 {
-                    FormID = form.ID,                   
+                    FormID = form.ID,
                     Url = item,
                     CreatedAt = DateTime.Now,
                     CreatorID = _currentUserService.UserId,
                 };
                 _formImageRepository.Add(formImageItem);
-                form.FormImages.Add(formImageItem);                        
-            }            
+                form.FormImages.Add(formImageItem);
+            }
             return await _formRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Create Success" : "Create Fail";
         }
     }

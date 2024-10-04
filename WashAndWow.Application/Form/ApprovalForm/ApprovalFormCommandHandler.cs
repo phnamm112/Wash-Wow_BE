@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
 using WashAndWow.Domain.Repositories;
@@ -22,7 +17,7 @@ namespace WashAndWow.Application.Form.ApprovalForm
         }
         public async Task<string> Handle(ApprovalFormCommand request, CancellationToken cancellationToken)
         {
-            if(!Enum.IsDefined(typeof(FormStatus), request.Status))
+            if (!Enum.IsDefined(typeof(FormStatus), request.Status))
             {
                 throw new NotFoundException("Status not found");
             }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Entities.Base;
 using WashAndWow.Domain.Entities;
 using static Wash_Wow.Domain.Enums.Enums;
@@ -26,11 +21,11 @@ namespace Wash_Wow.Domain.Entities
         public required UserStatus Status { get; set; }
 
         public virtual ICollection<BookingEntity> Bookings { get; set; }
-        public virtual ICollection<LaundryShopEntity> LaundryShops { get; set;}
+        public virtual ICollection<LaundryShopEntity> LaundryShops { get; set; }
 
         public virtual ICollection<RatingEntity> Ratings { get; set; }   // List rating đã tạo
-        public virtual ICollection<VoucherEntity> CreatedVouchers {  get; set; }   // List voucher đã tạo
-        public virtual ICollection<VoucherEntity> UsedVouchers {  get; set; }     // List voucher đã sử dụng
+        public virtual ICollection<VoucherEntity> CreatedVouchers { get; set; }   // List voucher đã tạo
+        public virtual ICollection<VoucherEntity> UsedVouchers { get; set; }     // List voucher đã sử dụng
         public virtual ICollection<FormEntity> SentForms { get; set; }  // ListForm đã gửi
     }
 }
