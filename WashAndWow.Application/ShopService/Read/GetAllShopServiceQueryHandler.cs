@@ -18,7 +18,7 @@ namespace WashAndWow.Application.ShopService.Read
         public async Task<IPagedResult<ShopServiceDto>> Handle(GetAllShopServiceQuery request, CancellationToken cancellationToken)
         {
 
-            var pagedResult = await _repository.FindAllAsync(x => x.ShopID.Equals(request.ShopId) && x.DeletedAt == null, 
+            var pagedResult = await _repository.FindAllAsync(x => x.ShopID.Equals(request.ShopId) && x.DeletedAt == null,
                 request.PageNo, request.PageSize, cancellationToken);
             // Map the entities to DTOs
             var pagedDtoResult = new PagedList<ShopServiceDto>(

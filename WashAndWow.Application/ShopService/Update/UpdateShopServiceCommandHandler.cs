@@ -29,7 +29,7 @@ namespace WashAndWow.Application.ShopService.Update
         public async Task<ShopServiceDto?> Handle(UpdateShopServiceCommand request, CancellationToken cancellationToken)
         {
             // Fetch the existing shop service entity
-            var shopService = await _shopServiceRepository.FindAsync(x=> x.ID.Equals(request.Id), cancellationToken);
+            var shopService = await _shopServiceRepository.FindAsync(x => x.ID.Equals(request.Id), cancellationToken);
             if (shopService == null)
             {
                 throw new NotFoundException($"Service with ID {request.Id} not found");
@@ -54,7 +54,7 @@ namespace WashAndWow.Application.ShopService.Update
             shopService.Description = request.Description;
             shopService.PricePerKg = request.PricePerKg;
             shopService.UpdaterID = currentUserId;
-            shopService.LastestUpdateAt = DateTime.UtcNow;  
+            shopService.LastestUpdateAt = DateTime.UtcNow;
 
 
             await _unitOfWork.SaveChangesAsync(cancellationToken); // Save changes

@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using Wash_Wow.Application.Common.Pagination;
-using Wash_Wow.Domain.Repositories;
 using WashAndWow.Application.Booking;
 using WashAndWow.Application.Booking.Create;
 using WashAndWow.Application.Booking.Delete;
@@ -61,7 +60,7 @@ namespace WashAndWow.API.Controllers
             CancellationToken cancellationToken = default)
         {
             var query = new GetBookingByIdQuery(id);
-            var result = await _mediator.Send(query, cancellationToken);          
+            var result = await _mediator.Send(query, cancellationToken);
             return Ok(result);
         }
 

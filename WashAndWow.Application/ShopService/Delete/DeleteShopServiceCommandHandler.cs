@@ -4,7 +4,6 @@ using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Common.Interfaces;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
-using WashAndWow.Infrastructure.Repositories;
 
 namespace WashAndWow.Application.ShopService.Delete
 {
@@ -15,7 +14,7 @@ namespace WashAndWow.Application.ShopService.Delete
         private readonly IShopServiceRepository _shopServiceReposirtory;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteShopServiceCommandHandler(IShopServiceRepository repository, 
+        public DeleteShopServiceCommandHandler(IShopServiceRepository repository,
             IUnitOfWork unitOfWork,
             ICurrentUserService currentUserService,
             IUserRepository userRepository)

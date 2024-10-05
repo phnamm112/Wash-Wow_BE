@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using Wash_Wow.Application.Common.Models;
 using Wash_Wow.Application.Common.Pagination;
 using Wash_Wow.Domain.Repositories;
-using Wash_Wow.Infrastructure.Repositories;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.Booking.GetAllByShopID
@@ -32,7 +30,7 @@ namespace WashAndWow.Application.Booking.GetAllByShopID
                 , request.PageNumber, request.PageSize, cancellationToken);
             var customer = await _userRepository.FindAllToDictionaryAsync(x => x.DeletedAt == null, x => x.ID, x => x.FullName, cancellationToken);
             var laundryShops = await _laundryShopRepository.FindAllToDictionaryAsync(x => x.DeletedAt == null, x => x.ID, x => x.Name, cancellationToken);
-            
+
             return PagedResult<BookingDto>.Create(
             totalCount: result.TotalCount,
             pageCount: result.PageCount,

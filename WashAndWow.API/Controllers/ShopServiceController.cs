@@ -1,15 +1,14 @@
 ﻿using EXE2_Wash_Wow.Controllers;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using Wash_Wow.Application.Common.Pagination;
 using Wash_Wow.Domain.Repositories;
+using WashAndWow.Application.ShopService;
 using WashAndWow.Application.ShopService.Create;
 using WashAndWow.Application.ShopService.Delete;
 using WashAndWow.Application.ShopService.Read;
 using WashAndWow.Application.ShopService.Update;
-using WashAndWow.Application.ShopService;
-using Wash_Wow.Application.Common.Pagination;
 
 namespace WashAndWow.API.Controllers
 {
