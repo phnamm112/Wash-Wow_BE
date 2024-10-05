@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using MediatR;
 using Wash_Wow.Domain.Common.Exceptions;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.ShopService.Read
 {
-    public class GetShopServicebyIdQueryHandler
+    public class GetShopServicebyIdQueryHandler : IRequestHandler<GetShopServiceByIdQuery, ShopServiceDto>
     {
         private readonly IShopServiceRepository _repository;
         private readonly IMapper _mapper;

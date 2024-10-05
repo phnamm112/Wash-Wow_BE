@@ -38,9 +38,11 @@ namespace WashAndWow.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<PagedResult<ShopServiceDto>>>> GetAllByShopID(
             [FromRoute] string shopID,
-            [FromBody] GetAllShopServiceQuery query,
+            [FromQuery] int pageNo,
+            [FromQuery] int pageSize,
             CancellationToken cancellationToken = default)
         {
+            var query = new GetAllShopServiceQuery(pageNo, pageSize);
             query.ShopId = shopID;
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new JsonResponse<IPagedResult<ShopServiceDto>>(result));

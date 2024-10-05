@@ -48,7 +48,7 @@ namespace WashAndWow.Application.ShopService.Create
             var existingService = await _shopServiceRepository.FindAsync(s => s.Name == request.Name && s.ShopID == request.ShopId, cancellationToken);
             if (existingService != null)
             {
-                throw new Exception($"Service with name {request.Name} already exists in shop {request.ShopId}");
+                throw new DuplicationException($"Service with name {request.Name} already exists in shop {request.ShopId}");
             }
             var shopServiceEntity = new ShopServiceEntity
             {
