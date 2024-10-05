@@ -15,6 +15,7 @@ namespace WashAndWow.Application.Form
             var dto = mapper.Map<FormDto>(projectFrom);
             dto.Title = title;
             dto.Status = projectFrom.Status.ToString();
+            dto.SenderID = projectFrom.CreatorID;
             dto.FieldValues = projectFrom.FieldValues.MapToFieldValueDtoList(mapper, contents);
             return dto;
         }
