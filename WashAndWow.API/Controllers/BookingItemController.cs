@@ -63,8 +63,7 @@ namespace WashAndWow.API.Controllers
         public async Task<IActionResult> CreateBookingItem(
             string bookingId, [FromBody] CreateBookingItemCommand command,
             CancellationToken cancellationToken = default)
-        {
-            command.BookingId = bookingId;  // Assign bookingId to command
+        {  
             var result = await _mediator.Send(command, cancellationToken);
             return Ok(new JsonResponse<string>(result));
         }

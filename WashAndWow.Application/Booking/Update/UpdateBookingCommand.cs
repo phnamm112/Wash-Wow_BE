@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
 using WashAndWow.Application.BookingItem;
 using static Wash_Wow.Domain.Enums.Enums;
 
 namespace WashAndWow.Application.Booking.Update
 {
-    public class UpdateBookingCommand : IRequest<BookingDto>
+    public class UpdateBookingCommand : IRequest<string>, ICommand
     {
         public string Id { get; set; }
         public float LaundryWeight { get; set; }

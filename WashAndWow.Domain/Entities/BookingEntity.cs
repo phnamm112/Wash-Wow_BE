@@ -22,7 +22,7 @@ namespace Wash_Wow.Domain.Entities
         [ForeignKey(nameof(LaundryShopID))]
         public virtual LaundryShopEntity LaundryShop { get; set; }
 
-        public required string VoucherID { get; set; }  // 2 case: creator là admin/shop owner
+        public string? VoucherID { get; set; }  // 2 case: creator là admin/shop owner
         [ForeignKey(nameof(VoucherID))]
         public virtual VoucherEntity Voucher { get; set; }
 

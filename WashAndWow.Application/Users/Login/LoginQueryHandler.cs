@@ -26,7 +26,7 @@ namespace Wash_Wow.Application.Users.Login
                 var checkPassword = _repository.VerifyPassword(query.user.Password, user.PasswordHash);
                 if (checkPassword)
                 {
-                    return UserLoginDto.Create(user.Email, user.ID, user.Role.ToString());
+                    return UserLoginDto.Create(user.Email, user.FullName, user.ID, user.Role.ToString());
                 }
             }
             throw new NotFoundException("Tài khoản hoặc mật khẩu không đúng.");
