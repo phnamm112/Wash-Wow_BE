@@ -24,7 +24,7 @@ namespace Wash_Wow.Domain.Entities
 
         public string? VoucherID { get; set; }  // 2 case: creator là admin/shop owner
         [ForeignKey(nameof(VoucherID))]
-        public virtual VoucherEntity Voucher { get; set; }
+        public virtual VoucherEntity? Voucher { get; set; }
 
         public virtual ICollection<BookingItemEntity> BookingItems { get; set; }
     }
