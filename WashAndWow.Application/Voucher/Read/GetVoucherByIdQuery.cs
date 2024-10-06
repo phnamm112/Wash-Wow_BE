@@ -11,5 +11,9 @@ namespace WashAndWow.Application.Voucher.Read
         {
             Id = id;
         }
+        public GetVoucherByIdQuery()
+        {
+            
+        }
     }
 }

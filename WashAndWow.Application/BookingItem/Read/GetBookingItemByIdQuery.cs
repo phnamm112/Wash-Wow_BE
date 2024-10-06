@@ -11,5 +11,9 @@ namespace WashAndWow.Application.BookingItem.Read
         {
             Id = id;
         }
+        public GetBookingItemByIdQuery()
+        {
+            
+        }
     }
 }

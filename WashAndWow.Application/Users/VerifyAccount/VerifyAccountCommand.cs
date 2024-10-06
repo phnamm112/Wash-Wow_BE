@@ -10,6 +10,10 @@ namespace WashAndWow.Application.Users.VerifyAccount
 
             Token = token;
         }
+        public VerifyAccountCommand()
+        {
+            
+        }
         public string Token { get; set; }
     }
 }

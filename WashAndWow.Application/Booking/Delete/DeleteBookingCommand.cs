@@ -10,5 +10,9 @@ namespace WashAndWow.Application.Booking.Delete
         {
             Id = id;
         }
+        public DeleteBookingCommand()
+        {
+            
+        }
     }
 }

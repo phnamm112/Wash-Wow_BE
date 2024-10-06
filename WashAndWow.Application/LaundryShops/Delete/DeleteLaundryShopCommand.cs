@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using Castle.Components.DictionaryAdapter.Xml;
+using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
 
 namespace WashAndWow.Application.LaundryShops.Delete
 {
-    public class DeleteLaundryShopCommand : IRequest<bool>
+    public class DeleteLaundryShopCommand : IRequest<bool>, ICommand
     {
         public DeleteLaundryShopCommand()
         {
