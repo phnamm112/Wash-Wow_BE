@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.IdentityModel.Tokens;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Entities;
@@ -58,7 +59,7 @@ namespace WashAndWow.Application.Booking.Create
 
             // Voucher validation
             var voucher = await _voucherRepository.FindAsync(x => x.ID == request.VoucherId && x.DeletedAt == null, cancellationToken);
-            if (request.VoucherId != null && (voucher == null || voucher.ExpiryDate > DateTime.Now))
+            if (!request.VoucherId.IsNullOrEmpty() && (voucher == null || voucher.ExpiryDate > DateTime.Now))
             {
                 throw new NotFoundException("Voucher is not exist");
             }
