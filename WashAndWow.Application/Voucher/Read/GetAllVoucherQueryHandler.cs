@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
+using Castle.Core.Resource;
 using MediatR;
+using Wash_Wow.Application.Common.Models;
+using Wash_Wow.Application.Common.Pagination;
 using Wash_Wow.Domain.Repositories;
 using Wash_Wow.Infrastructure.Repositories;
+using WashAndWow.Application.Booking;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.Voucher.Read
 {
-    public class GetAllVoucherQueryHandler : IRequestHandler<GetAllVoucherQuery, IPagedResult<VoucherDto>>
+    public class GetAllVoucherQueryHandler : IRequestHandler<GetAllVoucherQuery, PagedResult<VoucherDto>>
     {
         private readonly IVoucherRepository _repository;
         private readonly IMapper _mapper;
@@ -17,18 +21,16 @@ namespace WashAndWow.Application.Voucher.Read
             _mapper = mapper;
         }
 
-        public async Task<IPagedResult<VoucherDto>> Handle(GetAllVoucherQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<VoucherDto>> Handle(GetAllVoucherQuery request, CancellationToken cancellationToken)
         {
-            var pagedResult = await _repository.FindAllAsync(x => x.Amount >= 1, request.PageNo, request.PageSize, cancellationToken);
-            // Map the entities to DTOs
-            var pagedDtoResult = new PagedList<VoucherDto>(
-                pagedResult.TotalCount,
-                pagedResult.PageNo,
-                pagedResult.PageSize,
-                _mapper.Map<List<VoucherDto>>(pagedResult.ToList())
-            );
+            var result = await _repository.FindAllAsync(x => x.DeletedAt == null, request.PageNumber, request.PageSize, cancellationToken);
 
-            return pagedDtoResult;
+            return PagedResult<VoucherDto>.Create(
+            totalCount: result.TotalCount,
+            pageCount: result.PageCount,
+            pageSize: result.PageSize,
+            pageNumber: result.PageNo,
+                data: result.MapToVoucherDtoList(_mapper));
         }
     }
 }
