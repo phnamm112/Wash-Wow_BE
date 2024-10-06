@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using Wash_Wow.Application.Common.Pagination;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Application.Voucher;
 using WashAndWow.Application.Voucher.Create;
@@ -22,46 +23,55 @@ namespace WashAndWow.API.Controllers
             _mediator = mediator;
         }
 
-        // Get all voucher
+        /// <summary>
+        /// Retrieve all voucher by pagination
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(JsonResponse<IPagedResult<VoucherDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResponse<PagedResult<VoucherDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JsonResponse<IPagedResult<VoucherDto>>>> GetAllRating(
+        public async Task<ActionResult<JsonResponse<PagedResult<VoucherDto>>>> GetAllVoucher(
             [FromQuery] GetAllVoucherQuery query,
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(query, cancellationToken);
-            return Ok(new JsonResponse<IPagedResult<VoucherDto>>(result));
+            return Ok(new JsonResponse<PagedResult<VoucherDto>>(result));
         }
 
-        // Get a specific voucher by ID
+        /// <summary>
+        /// Retrieve single voucher by voucher's ID
+        /// </summary>
+        /// <param name="id">ID of voucher</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(JsonResponse<VoucherDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(VoucherDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetRatingById(string id,
+        public async Task<ActionResult<VoucherDto>> GetVoucherByID([FromRoute] string id,
             CancellationToken cancellationToken = default)
         {
             var query = new GetVoucherByIdQuery(id);
             var result = await _mediator.Send(query, cancellationToken);
-
-            if (result == null)
-            {
-                return NotFound(new JsonResponse<string>($"Rating with ID {id} not found"));
-            }
-
-            return Ok(new JsonResponse<VoucherDto>(result));
+            return Ok(result);
         }
 
-        // Create a new voucher
+        /// <summary>
+        /// Method allow for Admin and ShopOwner to create an voucher
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateRating(
+        public async Task<ActionResult<JsonResponse<string>>> CreateVoucher(
             [FromBody] CreateVoucherCommand command,
             CancellationToken cancellationToken = default)
         {
@@ -69,44 +79,45 @@ namespace WashAndWow.API.Controllers
             return Ok(new JsonResponse<string>(result));
         }
 
-        // Update an existing voucher
-        [HttpPut]
+        /// <summary>
+        /// Update all fields of voucher
+        /// </summary>
+        /// <param name="id">ID of voucher</param>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut("vouchers/voucher/{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateRating(
+        public async Task<ActionResult<JsonResponse<string>>> UpdateVoucher([FromRoute] string id,
             [FromBody] UpdateVoucherCommand command,
             CancellationToken cancellationToken = default)
         {
+            command.Id = id;
             var result = await _mediator.Send(command, cancellationToken);
-
-            if (result == null)
-            {
-                return NotFound(new JsonResponse<string>($"Service with ID {command.Id} not found"));
-            }
-
-            return Ok(new JsonResponse<string>("Service updated successfully"));
+            return Ok(new JsonResponse<string>(result));
         }
 
-        // Delete a voucher
-        [HttpDelete("{id}")]
+        /// <summary>
+        /// Delete an voucher by marked it as deleted
+        /// </summary>
+        /// <param name="id">ID of voucher</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpDelete("vouchers/voucher/{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteService(string id,
+        public async Task<ActionResult<JsonResponse<string>>> DeleteVoucher([FromRoute]string id,
             CancellationToken cancellationToken = default)
         {
             var command = new DeleteVoucherCommand(id);
             var result = await _mediator.Send(command, cancellationToken);
-            if (result == null)
-            {
-                return NotFound(new JsonResponse<string>($"Rating with ID {command.Id} not found"));
-            }
-
-            return Ok(new JsonResponse<string>("Rating deleted successfully"));
+            return Ok(new JsonResponse<string>(result));
         }
     }
 }

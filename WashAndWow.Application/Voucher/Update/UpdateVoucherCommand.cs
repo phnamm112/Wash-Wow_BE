@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
 using static Wash_Wow.Domain.Enums.Enums;
 
 namespace WashAndWow.Application.Voucher.Update
 {
-    public class UpdateVoucherCommand : IRequest<VoucherDto>
+    public class UpdateVoucherCommand : IRequest<string>, ICommand
     {
         public string Id { get; set; }
         public string Name { get; set; }

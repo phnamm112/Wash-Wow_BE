@@ -10,7 +10,7 @@ namespace WashAndWow.Domain.Entities
         public required string Name { get; set; }
         public required string Description { get; set; }
         public required decimal PricePerKg { get; set; }
-        public required string ShopID { get; set; }
+        public string? ShopID { get; set; }
         [ForeignKey(nameof(ShopID))]
         public virtual LaundryShopEntity LaundryShop { get; set; }
 
