@@ -1,14 +1,15 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
 
 namespace WashAndWow.Application.LaundryShops.Read
 {
-    public class GetLaundryShopByIdQuery : IRequest<LaundryShopDto>
+    public class GetLaundryShopByIdQuery : IRequest<LaundryShopDto>, IQuery
     {
         public string Id { get; set; }
 
-        public GetLaundryShopByIdQuery(string id)
+        public GetLaundryShopByIdQuery()
         {
-            Id = id;
+            
         }
     }
 
