@@ -1,10 +1,13 @@
-﻿using static Wash_Wow.Domain.Enums.Enums;
+﻿using AutoMapper;
+using Wash_Wow.Application.Common.Mappings;
+using WashAndWow.Domain.Entities;
+using static Wash_Wow.Domain.Enums.Enums;
 
 namespace WashAndWow.Application.Voucher
 {
-    public class VoucherDto
+    public class VoucherDto : IMapFrom<VoucherEntity>
     {
-        string Id { get; set; }
+        public string ID { get; set; }
         public string Name { get; set; }
         public string ImgUrl { get; set; }
         public DateTime ExpiryDate { get; set; }
@@ -14,6 +17,11 @@ namespace WashAndWow.Application.Voucher
         public decimal Amount { get; set; }
         public decimal ConditionOfUse { get; set; }
         public string CreatorID { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<VoucherEntity,VoucherDto>();
+        }
     }
 
 }

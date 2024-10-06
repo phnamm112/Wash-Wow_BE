@@ -1,19 +1,21 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
+using Wash_Wow.Application.Common.Pagination;
 using Wash_Wow.Domain.Repositories;
 
 namespace WashAndWow.Application.Voucher.Read
 {
-    public class GetAllVoucherQuery : IRequest<IPagedResult<VoucherDto>>
+    public class GetAllVoucherQuery : IRequest<PagedResult<VoucherDto>>, IQuery
     {
-        public int PageNo { get; } = 1;
-        public int PageSize { get; } = 10;
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
         public GetAllVoucherQuery()
         {
+            
         }
-
-        public GetAllVoucherQuery(int pageNo, int pageSize)
+        public GetAllVoucherQuery(int no, int pageSize)
         {
-            PageNo = pageNo;
+            PageNumber = no;
             PageSize = pageSize;
         }
     }
