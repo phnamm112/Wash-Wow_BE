@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
+using Wash_Wow.Domain.Enums;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Entities;
 using WashAndWow.Domain.Repositories;
@@ -39,8 +40,8 @@ namespace WashAndWow.Application.ShopService.Create
             {
                 throw new NotFoundException("Laundry shop is not exist");
             }
-            // 3. Check if the current user is the owner of the shop
-            if (laundryShop.OwnerID != user.ID)
+            // 3. Check if the current user is the owner of the shop or user is a admin
+            if (laundryShop.OwnerID != user.ID && user.Role != Enums.Role.Admin)
             {
                 throw new UnauthorizedAccessException("You are not allowed to create a service for this shop");
             }
