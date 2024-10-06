@@ -6,6 +6,7 @@ using Wash_Wow.Domain.Repositories;
 using WashAndWow.Application.LaundryShops;
 using WashAndWow.Application.LaundryShops.Create;
 using WashAndWow.Application.LaundryShops.Delete;
+using WashAndWow.Application.LaundryShops.Get_by_filter;
 using WashAndWow.Application.LaundryShops.Read;
 using WashAndWow.Application.LaundryShops.Update;
 
@@ -22,6 +23,27 @@ namespace WashAndWow.API.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Retrieve all laudry shop data with filter 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet("laundryShops/filter-laundry-shop")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<List<LaundryShopDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<JsonResponse<List<LaundryShopDto>>>> FilterOrder(
+            [FromQuery] FilterLaundryShopQuery query
+            , CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(result);
+        }
+
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status201Created)]
@@ -35,25 +57,34 @@ namespace WashAndWow.API.Controllers
             return Ok(new JsonResponse<string>(result));
         }
 
+
+        /// <summary>
+        /// Retrieve laundry shop with ID
+        /// </summary>
+        /// <param name="id">ID of laundry shop</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(JsonResponse<LaundryShopDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LaundryShopDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<JsonResponse<LaundryShopDto>>> GetLaundryShopById(string id,
+        public async Task<ActionResult<LaundryShopDto>> GetLaundryShopById([FromRoute] string id,
             CancellationToken cancellationToken = default)
         {
-            var query = new GetLaundryShopByIdQuery(id);
+            var query = new GetLaundryShopByIdQuery();
+            query.Id = id;
             var result = await _mediator.Send(query, cancellationToken);
-
-            if (result == null)
-            {
-                return NotFound(new JsonResponse<string>($"LaundryShop with ID {id} not found"));
-            }
-
-            return Ok(new JsonResponse<LaundryShopDto>(result));
+            return Ok(result);
         }
 
+
+        /// <summary>
+        /// API BUGGING
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<IPagedResult<LaundryShopDto>>), StatusCodes.Status200OK)]
