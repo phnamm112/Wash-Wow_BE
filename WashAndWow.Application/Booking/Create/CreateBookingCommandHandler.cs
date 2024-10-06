@@ -150,7 +150,6 @@ namespace WashAndWow.Application.Booking.Create
                 _voucherRepository.Update(voucher);
             }
 
-            _bookingRepository.Update(booking);
             return await _bookingRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success" : "Failed";
         }
     }
