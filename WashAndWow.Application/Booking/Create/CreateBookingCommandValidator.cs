@@ -11,9 +11,6 @@ namespace WashAndWow.Application.Booking.Create
 
         private void ConfigureValidationRules()
         {
-            RuleFor(v => v.VoucherId)
-                .NotEmpty().NotNull().WithMessage("VoucherID is required");
-
             RuleFor(v => v.BookingItems)
                 .NotEmpty().WithMessage("There is no booking item in request");
 
