@@ -79,44 +79,45 @@ namespace WashAndWow.API.Controllers
             return Ok(new JsonResponse<string>(result));
         }
 
-        // Update an existing voucher
-        [HttpPut]
+        /// <summary>
+        /// Update all fields of voucher
+        /// </summary>
+        /// <param name="id">ID of voucher</param>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut("vouchers/voucher/{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateRating(
+        public async Task<ActionResult<JsonResponse<string>>> UpdateVoucher([FromRoute] string id,
             [FromBody] UpdateVoucherCommand command,
             CancellationToken cancellationToken = default)
         {
+            command.Id = id;
             var result = await _mediator.Send(command, cancellationToken);
-
-            if (result == null)
-            {
-                return NotFound(new JsonResponse<string>($"Service with ID {command.Id} not found"));
-            }
-
-            return Ok(new JsonResponse<string>("Service updated successfully"));
+            return Ok(new JsonResponse<string>(result));
         }
 
-        // Delete a voucher
-        [HttpDelete("{id}")]
+        /// <summary>
+        /// Delete an voucher by marked it as deleted
+        /// </summary>
+        /// <param name="id">ID of voucher</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpDelete("vouchers/voucher/{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteService(string id,
+        public async Task<ActionResult<JsonResponse<string>>> DeleteVoucher([FromRoute]string id,
             CancellationToken cancellationToken = default)
         {
             var command = new DeleteVoucherCommand(id);
             var result = await _mediator.Send(command, cancellationToken);
-            if (result == null)
-            {
-                return NotFound(new JsonResponse<string>($"Rating with ID {command.Id} not found"));
-            }
-
-            return Ok(new JsonResponse<string>("Rating deleted successfully"));
+            return Ok(new JsonResponse<string>(result));
         }
     }
 }

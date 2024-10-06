@@ -1,33 +1,47 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
+using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Common.Interfaces;
+using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
+using static Wash_Wow.Domain.Enums.Enums;
 
 namespace WashAndWow.Application.Voucher.Delete
 {
-    public class DeleteVoucherCommandHandler : IRequestHandler<DeleteVoucherCommand, bool>
+    public class DeleteVoucherCommandHandler : IRequestHandler<DeleteVoucherCommand, string>
     {
         private readonly IVoucherRepository _repository;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IUserRepository _userRepository;
 
         public DeleteVoucherCommandHandler(
             IVoucherRepository repository,
-            IUnitOfWork unitOfWork)
+            IUserRepository userRepository,
+            ICurrentUserService currentUserService)
         {
             _repository = repository;
-            _unitOfWork = unitOfWork;
+            _currentUserService = currentUserService;
+            _userRepository = userRepository;   
         }
 
-        public async Task<bool> Handle(DeleteVoucherCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(DeleteVoucherCommand request, CancellationToken cancellationToken)
         {
-            var voucher = await _repository.FindAsync(ss => ss.ID.Equals(request.Id));
+            var voucher = await _repository.FindAsync(x => x.ID.Equals(request.Id) && x.DeletedAt == null, cancellationToken);
             if (voucher == null)
             {
-                return false; // Service not found
+                throw new NotFoundException("Voucher is not existed");
+            }
+            var user = await _userRepository.FindAsync(x => x.ID == _currentUserService.UserId && x.DeletedAt == null, cancellationToken);
+            if (user == null || !user.Role.Equals(Role.Admin))
+            {
+                throw new UnauthorizedException("Method not allowed ! Unauthorized");
             }
 
-            _repository.Remove(voucher);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);// save change 
-            return true; // Deletion successful
+            voucher.DeletedAt = DateTime.Now;
+            voucher.DeleterID = _currentUserService.UserId;
+            _repository.Update(voucher);
+            return await _repository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Deleted" : "Failed"; 
+            
         }
     }
 }
