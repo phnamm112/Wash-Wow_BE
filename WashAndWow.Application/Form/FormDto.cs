@@ -8,7 +8,7 @@ namespace WashAndWow.Application.Form
     {
         public string ID { get; set; }
         public string Status { get; set; }
-        public string SenderID {  get; set; }
+        public string SenderID { get; set; }
         public int FormTemplateID { get; set; }
         public string Title { get; set; }
         public List<FormImageDto> FormImages { get; set; }

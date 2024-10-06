@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using MediatR;
+using Wash_Wow.Domain.Common.Exceptions;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.ShopService.Read
 {
-    public class GetShopServicebyIdQueryHandler
+    public class GetShopServicebyIdQueryHandler : IRequestHandler<GetShopServiceByIdQuery, ShopServiceDto>
     {
         private readonly IShopServiceRepository _repository;
         private readonly IMapper _mapper;
@@ -15,12 +17,14 @@ namespace WashAndWow.Application.ShopService.Read
 
         public async Task<ShopServiceDto?> Handle(GetShopServiceByIdQuery request, CancellationToken cancellationToken)
         {
-            var shop = await _repository.FindAsync(x => x.ID == request.Id, cancellationToken);
+            var shopService = await _repository.FindAsync(x => x.ID == request.Id, cancellationToken);
 
-            if (shop == null)
-                return null;
+            if (shopService == null || shopService.DeletedAt != null)
+            {
+                throw new NotFoundException($"Service with ID {request.Id} not found or is deleted");
+            }
 
-            return _mapper.Map<ShopServiceDto>(shop);
+            return _mapper.Map<ShopServiceDto>(shopService);
         }
     }
 }

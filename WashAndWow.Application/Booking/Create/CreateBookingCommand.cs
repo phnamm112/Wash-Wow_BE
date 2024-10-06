@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Wash_Wow.Application.Common.Interfaces;
-using WashAndWow.Application.BookingItem;
 using WashAndWow.Application.BookingItem.Create;
-using static Wash_Wow.Domain.Enums.Enums;
 
 namespace WashAndWow.Application.Booking.Create
 {

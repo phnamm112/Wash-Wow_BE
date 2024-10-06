@@ -1,29 +1,47 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
+using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Common.Interfaces;
+using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.ShopService.Delete
 {
     public class DeleteShopServiceCommandHandler : IRequestHandler<DeleteShopServiceCommand, bool>
     {
-        private readonly IShopServiceRepository _repository;
+        private readonly IUserRepository _userRepository;
+        private readonly ICurrentUserService _currentUserService;
+        private readonly IShopServiceRepository _shopServiceReposirtory;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DeleteShopServiceCommandHandler(IShopServiceRepository repository, IUnitOfWork unitOfWork)
+        public DeleteShopServiceCommandHandler(IShopServiceRepository repository,
+            IUnitOfWork unitOfWork,
+            ICurrentUserService currentUserService,
+            IUserRepository userRepository)
         {
-            _repository = repository;
+            _shopServiceReposirtory = repository;
             _unitOfWork = unitOfWork;
+            _currentUserService = currentUserService;
+            _userRepository = userRepository;
         }
 
         public async Task<bool> Handle(DeleteShopServiceCommand request, CancellationToken cancellationToken)
         {
-            var shopService = await _repository.FindAsync(ss => ss.ID.Equals(request.Id));
-            if (shopService == null)
+            //User validation
+            var user = await _userRepository.FindAsync(x => x.ID == _currentUserService.UserId && x.DeletedAt == null, cancellationToken);
+            if (user == null)
             {
-                return false; // Service not found
+                throw new NotFoundException("User not found");
             }
 
-            _repository.Remove(shopService);
+            var shopService = await _shopServiceReposirtory.FindAsync(ss => ss.ID.Equals(request.Id));
+            if (shopService == null)
+            {
+                throw new NotFoundException($"Service with id: {request.Id} not found");
+            }
+            shopService.DeleterID = user.ID;
+            shopService.DeletedAt = DateTime.Now;
+            _shopServiceReposirtory.Update(shopService);
             await _unitOfWork.SaveChangesAsync(cancellationToken);// save change 
             return true; // Deletion successful
         }

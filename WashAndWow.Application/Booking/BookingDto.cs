@@ -15,9 +15,9 @@ namespace WashAndWow.Application.Booking
         public BookingStatus Status { get; set; }
         public DateTime ShopPickupTime { get; set; }
         public string CustomerID { get; set; }
-        public string CustomerName {  get; set; }
+        public string CustomerName { get; set; }
         public string LaundryShopID { get; set; }
-        public string LaundryShopName {  get; set; }
+        public string LaundryShopName { get; set; }
         public string VoucherId { get; set; }
         public List<BookingItemDto>? BookingItems { get; set; }
 
@@ -45,7 +45,7 @@ namespace WashAndWow.Application.Booking
         }
         public BookingDto()
         {
-            
+
         }
 
         public void Mapping(Profile profile)

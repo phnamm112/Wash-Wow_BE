@@ -96,12 +96,12 @@ namespace WashAndWow.Application.Booking.Create
                 BookingItemEntity bookingItem = new BookingItemEntity
                 {
                     BookingID = booking.ID,
-                    ServicesID = shopService.ID,                   
+                    ServicesID = shopService.ID,
                     CreatedAt = DateTime.UtcNow,
                     CreatorID = _currentUserService.UserId,
                 };
                 _bookingItemRepository.Add(bookingItem);
-                booking.BookingItems.Add(bookingItem);  
+                booking.BookingItems.Add(bookingItem);
 
                 // Calculate total price of booking
                 booking.TotalPrice += shopService.PricePerKg * booking.TotalPrice;
@@ -148,7 +148,7 @@ namespace WashAndWow.Application.Booking.Create
                 _userRepository.Update(user);
                 _voucherRepository.Update(voucher);
             }
-            
+
             _bookingRepository.Update(booking);
             return await _bookingRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success" : "Failed";
         }

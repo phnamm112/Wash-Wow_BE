@@ -2,7 +2,6 @@
 using MediatR;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
-using Wash_Wow.Domain.Common.Interfaces;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.Booking.Update

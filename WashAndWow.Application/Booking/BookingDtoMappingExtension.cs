@@ -1,14 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Domain.Entities;
-using WashAndWow.Application.Form;
-using WashAndWow.Application.FormTemplate;
-using WashAndWow.Domain.Entities;
-using WashAndWow.Domain.Entities.ConfigTable;
 
 namespace WashAndWow.Application.Booking
 {
