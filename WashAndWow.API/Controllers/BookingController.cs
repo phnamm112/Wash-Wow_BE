@@ -37,7 +37,7 @@ namespace WashAndWow.API.Controllers
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<PagedResult<BookingDto>>>> GetAllByShopID(
             [FromRoute] string shopID,
-            [FromBody] GetAllBookingbyShopIdQuery query,
+            [FromRoute] GetAllBookingbyShopIdQuery query,
             CancellationToken cancellationToken = default)
         {
             query.ShopId = shopID;
