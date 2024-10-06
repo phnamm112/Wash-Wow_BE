@@ -6,7 +6,10 @@ namespace WashAndWow.Application.Rating.Create
     public class CreateRatingCommand : IRequest<string>, ICommand
     {
         public RatingDto Rating { get; }
-
+        public CreateRatingCommand()
+        {
+            
+        }
         public CreateRatingCommand(RatingDto rating)
         {
             Rating = rating;

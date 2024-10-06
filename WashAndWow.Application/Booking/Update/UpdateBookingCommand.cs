@@ -17,6 +17,10 @@ namespace WashAndWow.Application.Booking.Update
         public string LaundryShopId { get; set; }
         public string VoucherId { get; set; }
         public List<BookingItemDto> BookingItems { get; set; } = new();
+
+        public UpdateBookingCommand()
+        {
+        }
     }
 }
 

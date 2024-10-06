@@ -15,5 +15,9 @@ namespace WashAndWow.Application.Voucher.Update
         public decimal? MinimumReduce { get; set; }
         public decimal Amount { get; set; }
         public decimal ConditionOfUse { get; set; }
+        public UpdateVoucherCommand()
+        {
+            
+        }
     }
 }

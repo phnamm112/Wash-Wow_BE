@@ -6,6 +6,10 @@ namespace WashAndWow.Application.LaundryShops.Create
 {
     public class CreateLaundryShopCommand : IRequest<string>, ICommand
     {
+        public CreateLaundryShopCommand()
+        {
+            
+        }
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneContact { get; set; }

@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Repositories;
 
 namespace WashAndWow.Application.BookingItem.Read
 {
-    public class GetAllBookingItemByBookingIdQuery : IRequest<IPagedResult<BookingItemDto>>
+    public class GetAllBookingItemByBookingIdQuery : IRequest<IPagedResult<BookingItemDto>> , IQuery
     {
         public string BookingId { get; }
         public int PageNo { get; } = 1;
