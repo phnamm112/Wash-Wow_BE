@@ -9,12 +9,11 @@ namespace WashAndWow.Application.Booking.GetAllByShopID
         public string ShopId { get; set; }
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
-
         public GetAllBookingbyShopIdQuery()
         {
+            
         }
-
-        public GetAllBookingbyShopIdQuery(string shopId, int no, int pageSize)
+        public GetAllBookingbyShopIdQuery(int no, int pageSize)
         {
             PageNumber = no;
             PageSize = pageSize;
