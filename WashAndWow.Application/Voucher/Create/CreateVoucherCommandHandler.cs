@@ -36,7 +36,7 @@ namespace WashAndWow.Application.Voucher.Create
                 throw new DuplicationException("Voucher name has exist");
             }
             var currentUser = await _userRepository.FindAsync(x => x.ID == _currentUserService.UserId && x.DeletedAt == null, cancellationToken);
-            if (currentUser == null || !currentUser.Role.Equals(Role.Admin) || !currentUser.Role.Equals(Role.ShopOwner))
+            if (currentUser == null || (!currentUser.Role.Equals(Role.Admin) && !currentUser.Role.Equals(Role.ShopOwner)) )
             {
                 throw new UnauthorizedException("Method not allow ! Unauthorized");
             }
