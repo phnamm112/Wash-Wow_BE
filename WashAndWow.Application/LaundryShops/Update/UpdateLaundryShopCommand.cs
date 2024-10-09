@@ -18,7 +18,7 @@ namespace WashAndWow.Application.LaundryShops.Update
         public string OwnerID { get; set; }
         public UpdateLaundryShopCommand()
         {
-            
+
         }
     }
 

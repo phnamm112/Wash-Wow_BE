@@ -8,7 +8,7 @@ namespace WashAndWow.Application.Rating.Create
         public RatingDto Rating { get; }
         public CreateRatingCommand()
         {
-            
+
         }
         public CreateRatingCommand(RatingDto rating)
         {

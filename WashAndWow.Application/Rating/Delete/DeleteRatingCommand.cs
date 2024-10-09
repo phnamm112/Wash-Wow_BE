@@ -7,7 +7,7 @@ namespace WashAndWow.Application.Rating.Delete
         public string Id { get; }
         public DeleteRatingCommand()
         {
-            
+
         }
         public DeleteRatingCommand(string id)
         {

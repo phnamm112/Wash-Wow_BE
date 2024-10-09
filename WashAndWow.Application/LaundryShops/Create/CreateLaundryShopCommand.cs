@@ -8,7 +8,7 @@ namespace WashAndWow.Application.LaundryShops.Create
     {
         public CreateLaundryShopCommand()
         {
-            
+
         }
         public string Name { get; set; }
         public string Address { get; set; }

@@ -12,7 +12,7 @@ namespace WashAndWow.Application.Booking.Delete
         }
         public DeleteBookingCommand()
         {
-            
+
         }
     }
 }

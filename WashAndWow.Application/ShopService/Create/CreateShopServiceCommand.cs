@@ -11,7 +11,7 @@ namespace WashAndWow.Application.ShopService.Create
         public string ShopId { get; set; }
         public CreateShopServiceCommand()
         {
-            
+
         }
     }
 }

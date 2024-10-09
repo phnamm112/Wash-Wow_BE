@@ -13,7 +13,7 @@ namespace WashAndWow.Application.Voucher.Read
         }
         public GetVoucherByIdQuery()
         {
-            
+
         }
     }
 }

@@ -13,7 +13,7 @@ namespace WashAndWow.Application.ShopService.Delete
         }
         public DeleteShopServiceCommand()
         {
-            
+
         }
     }
 }

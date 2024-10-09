@@ -8,7 +8,7 @@ namespace WashAndWow.Application.Rating.Read
         public string Id { get; }
         public GetRatingByIdQuery()
         {
-            
+
         }
         public GetRatingByIdQuery(string id)
         {

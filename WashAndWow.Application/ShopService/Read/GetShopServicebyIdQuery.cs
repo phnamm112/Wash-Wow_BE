@@ -13,7 +13,7 @@ namespace WashAndWow.Application.ShopService.Read
         }
         public GetShopServiceByIdQuery()
         {
-            
+
         }
     }
 

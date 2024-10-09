@@ -15,7 +15,7 @@ namespace Wash_Wow.Application.Users.Register
         }
         public RegisterCommand()
         {
-            
+
         }
         public string Password { get; set; }
         public string FullName { get; set; }

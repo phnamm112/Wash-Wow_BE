@@ -11,7 +11,7 @@ namespace WashAndWow.Application.ShopService.Update
         public string ShopID { get; set; }
         public UpdateShopServiceCommand()
         {
-            
+
         }
     }
 }

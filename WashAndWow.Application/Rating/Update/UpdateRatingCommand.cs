@@ -10,7 +10,7 @@ namespace WashAndWow.Application.Rating.Update
         public string? Comment { get; set; }
         public UpdateRatingCommand()
         {
-            
+
         }
     }
 }

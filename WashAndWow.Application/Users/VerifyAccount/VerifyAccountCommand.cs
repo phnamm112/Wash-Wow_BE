@@ -12,7 +12,7 @@ namespace WashAndWow.Application.Users.VerifyAccount
         }
         public VerifyAccountCommand()
         {
-            
+
         }
         public string Token { get; set; }
     }

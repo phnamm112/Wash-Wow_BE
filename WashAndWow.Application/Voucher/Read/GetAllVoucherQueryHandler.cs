@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using Castle.Core.Resource;
 using MediatR;
-using Wash_Wow.Application.Common.Models;
 using Wash_Wow.Application.Common.Pagination;
-using Wash_Wow.Domain.Repositories;
-using Wash_Wow.Infrastructure.Repositories;
-using WashAndWow.Application.Booking;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.Voucher.Read

@@ -20,7 +20,7 @@ namespace WashAndWow.Application.Voucher
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<VoucherEntity,VoucherDto>();
+            profile.CreateMap<VoucherEntity, VoucherDto>();
         }
     }
 

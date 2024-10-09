@@ -17,7 +17,7 @@ namespace WashAndWow.Application.Voucher.Update
         public decimal ConditionOfUse { get; set; }
         public UpdateVoucherCommand()
         {
-            
+
         }
     }
 }

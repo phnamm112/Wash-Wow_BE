@@ -13,7 +13,7 @@ namespace WashAndWow.Application.BookingItem.Read
         }
         public GetBookingItemByIdQuery()
         {
-            
+
         }
     }
 }
