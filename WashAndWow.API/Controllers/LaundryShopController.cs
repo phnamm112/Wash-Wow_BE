@@ -2,11 +2,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using Wash_Wow.Application.Common.Pagination;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Application.LaundryShops;
 using WashAndWow.Application.LaundryShops.Create;
 using WashAndWow.Application.LaundryShops.Delete;
 using WashAndWow.Application.LaundryShops.Get_by_filter;
+using WashAndWow.Application.LaundryShops.GetByOwnerId;
 using WashAndWow.Application.LaundryShops.Read;
 using WashAndWow.Application.LaundryShops.Update;
 
@@ -87,16 +89,34 @@ namespace WashAndWow.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(JsonResponse<IPagedResult<LaundryShopDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResponse<PagedResult<LaundryShopDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<IPagedResult<LaundryShopDto>>>> GetLaundryShops(
             [FromQuery] GetAllLaundryShopsQuery query,
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(query, cancellationToken);
-            return Ok(new JsonResponse<IPagedResult<LaundryShopDto>>(result));
+            return Ok(new JsonResponse<PagedResult<LaundryShopDto>>(result));
         }
-
+        /// <summary>
+        /// Retrieve laundry shops with OwnerId
+        /// </summary>
+        /// <param name="ownerId">ID of laundry shop</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("by-owner/{ownerId}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<PagedResult<LaundryShopDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<LaundryShopDto>> GetLaundryShopByOwnerId([FromRoute] string ownerId,
+            CancellationToken cancellationToken = default)
+        {
+            var query = new GetLaundryShopByOwnerIdQuery();
+            query.OwnerID = ownerId;
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(new JsonResponse<PagedResult<LaundryShopDto>>(result));
+        }
         [HttpPut]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]

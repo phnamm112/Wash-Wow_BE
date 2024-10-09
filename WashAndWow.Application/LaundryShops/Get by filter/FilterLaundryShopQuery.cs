@@ -1,10 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Application.Common.Pagination;
 using static Wash_Wow.Domain.Enums.Enums;
@@ -15,7 +9,7 @@ namespace WashAndWow.Application.LaundryShops.Get_by_filter
     {
         public FilterLaundryShopQuery()
         {
-            
+
         }
         public FilterLaundryShopQuery(int no, int pageSize)
         {

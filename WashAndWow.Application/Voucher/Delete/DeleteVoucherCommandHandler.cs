@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
-using Wash_Wow.Domain.Common.Interfaces;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Repositories;
 using static Wash_Wow.Domain.Enums.Enums;
@@ -21,7 +20,7 @@ namespace WashAndWow.Application.Voucher.Delete
         {
             _repository = repository;
             _currentUserService = currentUserService;
-            _userRepository = userRepository;   
+            _userRepository = userRepository;
         }
 
         public async Task<string> Handle(DeleteVoucherCommand request, CancellationToken cancellationToken)
@@ -40,8 +39,8 @@ namespace WashAndWow.Application.Voucher.Delete
             voucher.DeletedAt = DateTime.Now;
             voucher.DeleterID = _currentUserService.UserId;
             _repository.Update(voucher);
-            return await _repository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Deleted" : "Failed"; 
-            
+            return await _repository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Deleted" : "Failed";
+
         }
     }
 }

@@ -13,5 +13,8 @@ namespace WashAndWow.Application.Booking.Create
         public string? VoucherId { get; set; }
         public List<CreateBookingItemCommand>? BookingItems { get; set; } = new();
 
+        public CreateBookingCommand()
+        {
+        }
     }
 }

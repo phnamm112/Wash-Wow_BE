@@ -8,7 +8,7 @@ namespace WashAndWow.Application.Voucher.Delete
         public string Id { get; }
         public DeleteVoucherCommand()
         {
-            
+
         }
         public DeleteVoucherCommand(string id)
         {

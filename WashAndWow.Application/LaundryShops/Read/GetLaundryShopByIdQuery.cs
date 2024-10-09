@@ -9,7 +9,7 @@ namespace WashAndWow.Application.LaundryShops.Read
 
         public GetLaundryShopByIdQuery()
         {
-            
+
         }
     }
 

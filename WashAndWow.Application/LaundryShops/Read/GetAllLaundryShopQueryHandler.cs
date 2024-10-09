@@ -1,36 +1,38 @@
 ﻿using AutoMapper;
 using MediatR;
+using Wash_Wow.Application.Common.Pagination;
 using Wash_Wow.Domain.Repositories;
-using Wash_Wow.Infrastructure.Repositories;
 using WashAndWow.Domain.Repositories;
 
 namespace WashAndWow.Application.LaundryShops.Read
 {
-    public class GetAllLaundryShopsQueryHandler : IRequestHandler<GetAllLaundryShopsQuery, IPagedResult<LaundryShopDto>>
+    public class GetAllLaundryShopsQueryHandler : IRequestHandler<GetAllLaundryShopsQuery, PagedResult<LaundryShopDto>>
     {
-        private readonly ILaundryShopRepository _repository;
+        private readonly ILaundryShopRepository _shopRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public GetAllLaundryShopsQueryHandler(ILaundryShopRepository repository, IMapper mapper)
+        public GetAllLaundryShopsQueryHandler(ILaundryShopRepository repository,
+            IUserRepository userRepository,
+            IMapper mapper)
         {
-            _repository = repository;
+            _shopRepository = repository;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
-        public async Task<IPagedResult<LaundryShopDto>> Handle(GetAllLaundryShopsQuery request, CancellationToken cancellationToken)
+        public async Task<PagedResult<LaundryShopDto>> Handle(GetAllLaundryShopsQuery request, CancellationToken cancellationToken)
         {
             // Get paged list of LaundryShopEntity from the repository
-            var pagedResult = await _repository.FindAllAsync(x => x.DeletedAt == null, request.PageNo, request.PageSize, cancellationToken);
-
+            var pagedResult = await _shopRepository.FindAllAsync(x => x.DeletedAt == null, request.PageNo, request.PageSize, cancellationToken);
+            var ownerNames = await _userRepository.FindAllToDictionaryAsync(x => x.DeletedAt == null, x => x.ID, x => x.FullName, cancellationToken);
             // Map the entities to DTOs
-            var pagedDtoResult = new PagedList<LaundryShopDto>(
-                pagedResult.TotalCount,
-                pagedResult.PageNo,
-                pagedResult.PageSize,
-                _mapper.Map<List<LaundryShopDto>>(pagedResult.ToList())
-            );
-
-            return pagedDtoResult;
+            return PagedResult<LaundryShopDto>.Create(
+               totalCount: pagedResult.TotalCount,
+               pageCount: pagedResult.PageCount,
+               pageSize: pagedResult.PageSize,
+               pageNumber: pagedResult.PageNo,
+               data: pagedResult.MapToLaundryShopDtoList(_mapper, ownerNames));
         }
 
     }

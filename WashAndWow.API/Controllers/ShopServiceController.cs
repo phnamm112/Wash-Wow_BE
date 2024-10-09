@@ -7,6 +7,8 @@ using Wash_Wow.Domain.Repositories;
 using WashAndWow.Application.ShopService;
 using WashAndWow.Application.ShopService.Create;
 using WashAndWow.Application.ShopService.Delete;
+using WashAndWow.Application.ShopService.GetByFilter;
+using WashAndWow.Application.ShopService.GetByOwnerId;
 using WashAndWow.Application.ShopService.Read;
 using WashAndWow.Application.ShopService.Update;
 
@@ -27,11 +29,10 @@ namespace WashAndWow.API.Controllers
         /// Retrieve all services by laundry shop ID with pagination
         /// </summary>
         /// <param name="shopID">Laundry shop ID</param>
-        /// <param name="query">Request body</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("services/{shopID}")]
+        [Route("{shopID}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<IPagedResult<ShopServiceDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -72,6 +73,32 @@ namespace WashAndWow.API.Controllers
 
             return Ok(new JsonResponse<ShopServiceDto>(result));
         }
+        /// <summary>
+        /// Retrieve all service by Owner ID
+        /// </summary>
+        /// <param name="ownerId">Service ID</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{ownerId}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<PagedResult<ShopServiceDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<JsonResponse<PagedResult<ShopServiceDto>>>> GetServiceByOwnerId(
+            [FromRoute] string ownerId,
+            CancellationToken cancellationToken = default)
+        {
+            var query = new GetShopServiceByOwnerIdQuery();
+            query.OwnerID = ownerId;
+            var result = await _mediator.Send(query, cancellationToken);
+
+            if (result == null)
+            {
+                return NotFound(new JsonResponse<string>($"Service for owner {ownerId} not found"));
+            }
+
+            return Ok(new JsonResponse<PagedResult<ShopServiceDto>>(result));
+        }
 
         /// <summary>
         /// Shop owner creates a new service
@@ -100,7 +127,7 @@ namespace WashAndWow.API.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("services/service/{id}")]
+        [Route("/service/{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -146,6 +173,24 @@ namespace WashAndWow.API.Controllers
             }
 
             return Ok(new JsonResponse<string>("Service marked as deleted successfully"));
+        }
+        /// <summary>
+        /// Filter shop services
+        /// </summary>
+        /// <param name="query">Filter parameters</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("filter")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<PagedResult<ShopServiceDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<JsonResponse<PagedResult<ShopServiceDto>>>> FilterShopServices(
+            [FromQuery] FilterShopServiceQuery query,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await _mediator.Send(query, cancellationToken);
+            return Ok(new JsonResponse<PagedResult<ShopServiceDto>>(result));
         }
     }
 }

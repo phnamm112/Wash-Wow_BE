@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 using Wash_Wow.Application.Common.Pagination;
-using Wash_Wow.Domain.Repositories;
 using WashAndWow.Application.Voucher;
 using WashAndWow.Application.Voucher.Create;
 using WashAndWow.Application.Voucher.Delete;
@@ -112,7 +111,7 @@ namespace WashAndWow.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JsonResponse<string>>> DeleteVoucher([FromRoute]string id,
+        public async Task<ActionResult<JsonResponse<string>>> DeleteVoucher([FromRoute] string id,
             CancellationToken cancellationToken = default)
         {
             var command = new DeleteVoucherCommand(id);

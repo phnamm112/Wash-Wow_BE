@@ -17,7 +17,7 @@ namespace WashAndWow.Application.Voucher.Create
 
         public CreateVoucherCommand()
         {
-                    
+
         }
         public CreateVoucherCommand(string name, string imgUrl, DateTime expiryDate, VoucherType type, decimal? maximumReduce, decimal? minimumReduce, decimal amount, decimal conditionOfUse)
         {

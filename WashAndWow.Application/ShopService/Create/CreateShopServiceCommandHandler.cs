@@ -40,7 +40,7 @@ namespace WashAndWow.Application.ShopService.Create
             {
                 throw new NotFoundException("Laundry shop is not exist");
             }
-            // 3. Check if the current user is the owner of the shop or user is a admin
+            // Check if the current user is the owner of the shop or user is a admin
             if (laundryShop.OwnerID != user.ID && user.Role != Enums.Role.Admin)
             {
                 throw new UnauthorizedAccessException("You are not allowed to create a service for this shop");

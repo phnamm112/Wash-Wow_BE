@@ -13,6 +13,10 @@ namespace Wash_Wow.Application.Users.Register
             PhoneNumber = phoneNumber;
             Address = address;
         }
+        public RegisterCommand()
+        {
+
+        }
         public string Password { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }

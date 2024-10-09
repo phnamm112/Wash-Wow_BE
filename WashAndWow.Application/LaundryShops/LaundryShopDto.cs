@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Wash_Wow.Application.Common.Mappings;
 using Wash_Wow.Domain.Entities;
-using static Wash_Wow.Domain.Enums.Enums;
 
 namespace WashAndWow.Application.LaundryShops
 {
@@ -21,7 +20,7 @@ namespace WashAndWow.Application.LaundryShops
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<LaundryShopEntity,LaundryShopDto>();
+            profile.CreateMap<LaundryShopEntity, LaundryShopDto>();
         }
     }
 

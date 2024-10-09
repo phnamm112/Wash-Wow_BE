@@ -11,7 +11,7 @@ namespace WashAndWow.Application.ShopService.Delete
     {
         private readonly IUserRepository _userRepository;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IShopServiceRepository _shopServiceReposirtory;
+        private readonly IShopServiceRepository _shopServiceRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public DeleteShopServiceCommandHandler(IShopServiceRepository repository,
@@ -19,7 +19,7 @@ namespace WashAndWow.Application.ShopService.Delete
             ICurrentUserService currentUserService,
             IUserRepository userRepository)
         {
-            _shopServiceReposirtory = repository;
+            _shopServiceRepository = repository;
             _unitOfWork = unitOfWork;
             _currentUserService = currentUserService;
             _userRepository = userRepository;
@@ -34,14 +34,14 @@ namespace WashAndWow.Application.ShopService.Delete
                 throw new NotFoundException("User not found");
             }
 
-            var shopService = await _shopServiceReposirtory.FindAsync(ss => ss.ID.Equals(request.Id));
+            var shopService = await _shopServiceRepository.FindAsync(ss => ss.ID.Equals(request.Id));
             if (shopService == null)
             {
                 throw new NotFoundException($"Service with id: {request.Id} not found");
             }
             shopService.DeleterID = user.ID;
             shopService.DeletedAt = DateTime.Now;
-            _shopServiceReposirtory.Update(shopService);
+            _shopServiceRepository.Update(shopService);
             await _unitOfWork.SaveChangesAsync(cancellationToken);// save change 
             return true; // Deletion successful
         }
