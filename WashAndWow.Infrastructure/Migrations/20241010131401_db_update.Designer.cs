@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wash_Wow.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Wash_Wow.Infrastructure.Persistence;
 namespace WashAndWow.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241010131401_db_update")]
+    partial class db_update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,53 +159,6 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("FormTemplate");
-                });
-
-            modelBuilder.Entity("WashAndWow.Domain.Entities.ConfigTable.PaymentEntity", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<string>("BookingID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DeleterID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastestUpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UpdaterID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BookingID");
-
-                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("WashAndWow.Domain.Entities.EmailVerification", b =>
@@ -533,9 +489,6 @@ namespace WashAndWow.Infrastructure.Migrations
                     b.Property<string>("UpdaterID")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("VoucherDiscounted")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<string>("VoucherID")
                         .HasColumnType("nvarchar(450)");
 
@@ -723,17 +676,6 @@ namespace WashAndWow.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("FormTemplate");
-                });
-
-            modelBuilder.Entity("WashAndWow.Domain.Entities.ConfigTable.PaymentEntity", b =>
-                {
-                    b.HasOne("Wash_Wow.Domain.Entities.BookingEntity", "Booking")
-                        .WithMany()
-                        .HasForeignKey("BookingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booking");
                 });
 
             modelBuilder.Entity("WashAndWow.Domain.Entities.FormEntity", b =>
