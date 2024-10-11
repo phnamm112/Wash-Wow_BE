@@ -6,6 +6,7 @@ using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Entities;
 using Wash_Wow.Domain.Repositories;
 using WashAndWow.Domain.Entities;
+using WashAndWow.Domain.Entities.ConfigTable;
 using WashAndWow.Domain.Repositories;
 using static Wash_Wow.Domain.Enums.Enums;
 
@@ -21,6 +22,7 @@ namespace WashAndWow.Application.Booking.Create
         private readonly IShopServiceRepository _shopServiceRepository;
         private readonly IVoucherRepository _voucherRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IPaymentRepository _paymentRepository;
 
         public CreateBookingCommandHandler(IBookingRepository bookingRepository
             , IMapper mapper
@@ -29,7 +31,8 @@ namespace WashAndWow.Application.Booking.Create
             , ILaundryShopRepository laundryShopRepository
             , IShopServiceRepository shopServiceRepository
             , IVoucherRepository voucherRepository
-            , IUserRepository userRepository)
+            , IUserRepository userRepository
+            , IPaymentRepository paymentRepository)
         {
             _bookingRepository = bookingRepository;
             _mapper = mapper;
@@ -39,6 +42,7 @@ namespace WashAndWow.Application.Booking.Create
             _shopServiceRepository = shopServiceRepository;
             _voucherRepository = voucherRepository;
             _userRepository = userRepository;
+            _paymentRepository = paymentRepository;
         }
 
         public async Task<string> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -67,12 +71,13 @@ namespace WashAndWow.Application.Booking.Create
             {
                 throw new Exception("Voucher has been used");
             }
-
+            
             // Intialize booking
             BookingEntity booking = new BookingEntity
             {
                 Status = BookingStatus.PENDING,
                 ShopPickupTime = request.ShopPickupTime,
+                Note = request.Note ?? user.FullName, // điền note hoặc note là tên người dùng
                 TotalPrice = 0,
                 LaundryShopID = laundryShop.ID,
                 LaundryWeight = request.LaundryWeight,
@@ -98,6 +103,7 @@ namespace WashAndWow.Application.Booking.Create
                 {
                     BookingID = booking.ID,
                     ServicesID = shopService.ID,
+                    Amount = shopService.PricePerKg * (decimal)booking.LaundryWeight,
                     CreatedAt = DateTime.UtcNow,
                     CreatorID = _currentUserService.UserId,
                 };
@@ -105,7 +111,7 @@ namespace WashAndWow.Application.Booking.Create
                 booking.BookingItems.Add(bookingItem);
 
                 // Calculate total price of booking
-                booking.TotalPrice += shopService.PricePerKg * booking.TotalPrice;
+                booking.TotalPrice += bookingItem.Amount;
             }
             // Update that user has used voucher
             if (voucher != null)
@@ -124,6 +130,7 @@ namespace WashAndWow.Application.Booking.Create
                         {
                             decimal amountToReduce = voucher.Amount;
                             booking.TotalPrice -= amountToReduce;
+                            booking.VoucherDiscounted = amountToReduce;
                             break;
                         }
                     case VoucherType.DISCOUNT_BY_PERCENT:
@@ -141,15 +148,26 @@ namespace WashAndWow.Application.Booking.Create
                             }
 
                             booking.TotalPrice -= amountToReduce;
+                            booking.VoucherDiscounted = amountToReduce;
                             break;
                         }
                     default:
                         throw new ArgumentOutOfRangeException();
-                }
+                }             
                 _userRepository.Update(user);
                 _voucherRepository.Update(voucher);
             }
-
+            // ADD payment
+            var payment = new PaymentEntity
+            {
+                Amount = (double)booking.TotalPrice,
+                BookingID = booking.ID,
+                Name = booking.ID + " BANKING",
+                Status = PaymentStatus.PENDING,
+                CreatedAt = DateTime.UtcNow,
+                CreatorID = _currentUserService.UserId,
+            };
+            _paymentRepository.Add(payment);
             return await _bookingRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success" : "Failed";
         }
     }

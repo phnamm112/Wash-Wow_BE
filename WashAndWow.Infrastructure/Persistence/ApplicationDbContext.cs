@@ -26,6 +26,7 @@ namespace Wash_Wow.Infrastructure.Persistence
         public DbSet<FormTemplateContentEntity> FormTemplateContents { get; set; }
         public DbSet<FormFieldValueEntity> FormFieldValues { get; set; }
         public DbSet<EmailVerification> EmailVerifications { get; set; }
+        public DbSet<PaymentEntity> Payments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -48,5 +48,14 @@
             APPROVED,
             REJECTED
         }
+
+        //PAYMENT ENUM
+        public enum PaymentStatus
+        {
+            SUCCESS,
+            FAILURE,
+            PENDING,
+            CANCEL
+        }
     }
 }
