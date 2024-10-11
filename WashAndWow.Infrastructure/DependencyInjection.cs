@@ -41,6 +41,7 @@ public static class DependencyInjection
         services.AddTransient<IBookingRepository, BookingRepository>();
         services.AddTransient<IVoucherRepository, VoucherRepository>();
         services.AddTransient<IRatingRepository, RatingRepository>();
+        services.AddTransient<IPaymentRepository, PaymentRepository>();
         return services;
     }
 }

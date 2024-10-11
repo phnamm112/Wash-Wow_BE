@@ -18,6 +18,7 @@ namespace WashAndWow.Application.Booking
         public string CustomerName { get; set; }
         public string LaundryShopID { get; set; }
         public string LaundryShopName { get; set; }
+        public int PaymentID {  get; set; }
         public string VoucherId { get; set; }
         public List<BookingItemDto>? BookingItems { get; set; }
 
@@ -30,6 +31,7 @@ namespace WashAndWow.Application.Booking
             , string customerId
             , string laundryShopId
             , string voucherId
+            , int paymentId
             , List<BookingItemDto>? bookingItems)
         {
             ID = id;
@@ -41,6 +43,7 @@ namespace WashAndWow.Application.Booking
             CustomerID = customerId;
             LaundryShopID = laundryShopId;
             VoucherId = voucherId;
+            PaymentID = paymentId;
             BookingItems = bookingItems;
         }
         public BookingDto()
