@@ -5,6 +5,7 @@ using Serilog;
 using Wash_Wow.Application;
 using Wash_Wow.Infrastructure;
 using WashAndWow.Domain.Entities;
+using WashAndWow.Domain.Entities.Third_Party_define;
 
 namespace EXE2_Wash_Wow
 {
@@ -35,6 +36,8 @@ namespace EXE2_Wash_Wow
             services.AddInfrastructure(Configuration);
             services.ConfigureSwagger(Configuration);
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<PayOSKey>(Configuration.GetSection("PayOS"));
+            services.AddScoped<PayOSKey>();
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",

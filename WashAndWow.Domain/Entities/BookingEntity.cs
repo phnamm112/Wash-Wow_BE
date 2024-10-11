@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Wash_Wow.Domain.Entities.Base;
 using WashAndWow.Domain.Entities;
+using WashAndWow.Domain.Entities.ConfigTable;
 using static Wash_Wow.Domain.Enums.Enums;
 
 namespace Wash_Wow.Domain.Entities
@@ -22,10 +23,10 @@ namespace Wash_Wow.Domain.Entities
         [ForeignKey(nameof(LaundryShopID))]
         public virtual LaundryShopEntity LaundryShop { get; set; }
 
+        public decimal? VoucherDiscounted {  get; set; }
         public string? VoucherID { get; set; }  // 2 case: creator là admin/shop owner
         [ForeignKey(nameof(VoucherID))]
         public virtual VoucherEntity? Voucher { get; set; }
-
         public virtual ICollection<BookingItemEntity> BookingItems { get; set; }
     }
 }
