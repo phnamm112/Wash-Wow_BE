@@ -1,9 +1,10 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Repositories;
 
 namespace WashAndWow.Application.ShopService.Read
 {
-    public class GetAllShopServiceQuery : IRequest<IPagedResult<ShopServiceDto>>
+    public class GetAllShopServiceQuery : IRequest<IPagedResult<ShopServiceDto>>, IQuery
     {
         public string ShopId { get; set; }
         public int PageNo { get; set; }

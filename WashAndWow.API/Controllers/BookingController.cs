@@ -9,6 +9,7 @@ using WashAndWow.Application.Booking.Delete;
 using WashAndWow.Application.Booking.GetAllByShopID;
 using WashAndWow.Application.Booking.GetByID;
 using WashAndWow.Application.Booking.Update;
+using WashAndWow.Application.Booking.UpdateStatus;
 
 namespace WashAndWow.API.Controllers
 {
@@ -98,7 +99,26 @@ namespace WashAndWow.API.Controllers
             var result = await _mediator.Send(command, cancellationToken);
             return Ok(new JsonResponse<string>(result));
         }
-
+        /// <summary>
+        /// Update status of a booking
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("bookings/booking-status/{id}")]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateBookingStatus([FromRoute] string id,
+           [FromBody] UpdateBookingStatusCommand command,
+           CancellationToken cancellationToken = default)
+        {
+            command.BookingId = id;
+            var result = await _mediator.Send(command, cancellationToken);
+            return Ok(new JsonResponse<string>(result));
+        }
         // Delete a booking
         [HttpDelete("{id}")]
         [Produces(MediaTypeNames.Application.Json)]

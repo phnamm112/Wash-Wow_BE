@@ -1,9 +1,10 @@
 ﻿using MediatR;
-using Wash_Wow.Domain.Repositories;
+using Wash_Wow.Application.Common.Interfaces;
+using Wash_Wow.Application.Common.Pagination;
 
 namespace WashAndWow.Application.LaundryShops.Read
 {
-    public class GetAllLaundryShopsQuery : IRequest<IPagedResult<LaundryShopDto>>
+    public class GetAllLaundryShopsQuery : IRequest<PagedResult<LaundryShopDto>>, IQuery
     {
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;

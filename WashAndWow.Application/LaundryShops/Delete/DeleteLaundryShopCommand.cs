@@ -1,9 +1,14 @@
 ﻿using MediatR;
+using Wash_Wow.Application.Common.Interfaces;
 
 namespace WashAndWow.Application.LaundryShops.Delete
 {
-    public class DeleteLaundryShopCommand : IRequest<bool>
+    public class DeleteLaundryShopCommand : IRequest<bool>, ICommand
     {
+        public DeleteLaundryShopCommand()
+        {
+
+        }
         public string Id { get; set; }
 
         public DeleteLaundryShopCommand(string id)

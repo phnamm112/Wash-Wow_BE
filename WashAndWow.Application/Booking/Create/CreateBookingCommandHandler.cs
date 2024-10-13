@@ -23,6 +23,7 @@ namespace WashAndWow.Application.Booking.Create
         private readonly IVoucherRepository _voucherRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPaymentRepository _paymentRepository;
+        private readonly INotificationRepository _notificationRepository;
 
         public CreateBookingCommandHandler(IBookingRepository bookingRepository
             , IMapper mapper
@@ -32,7 +33,8 @@ namespace WashAndWow.Application.Booking.Create
             , IShopServiceRepository shopServiceRepository
             , IVoucherRepository voucherRepository
             , IUserRepository userRepository
-            , IPaymentRepository paymentRepository)
+            , IPaymentRepository paymentRepository
+            , INotificationRepository notificationRepository)
         {
             _bookingRepository = bookingRepository;
             _mapper = mapper;
@@ -43,6 +45,7 @@ namespace WashAndWow.Application.Booking.Create
             _voucherRepository = voucherRepository;
             _userRepository = userRepository;
             _paymentRepository = paymentRepository;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<string> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -63,7 +66,7 @@ namespace WashAndWow.Application.Booking.Create
 
             // Voucher validation
             var voucher = await _voucherRepository.FindAsync(x => x.ID == request.VoucherId && x.DeletedAt == null, cancellationToken);
-            if (!request.VoucherId.IsNullOrEmpty() && (voucher == null || voucher.ExpiryDate > DateTime.Now))
+            if (!request.VoucherId.IsNullOrEmpty() && (voucher == null || voucher.ExpiryDate < DateTime.Now))
             {
                 throw new NotFoundException("Voucher is not exist");
             }
@@ -168,6 +171,18 @@ namespace WashAndWow.Application.Booking.Create
                 CreatorID = _currentUserService.UserId,
             };
             _paymentRepository.Add(payment);
+
+            // Create and save notification
+            var notification = new NotificationEntity
+            {
+                ReceiverID = laundryShop.ID,
+                Content = $"A new booking has been created with ID: {booking.ID} for Laundry Shop: {laundryShop.Name}.",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow,
+                CreatorID = _currentUserService.UserId,
+                Type = NotificationType.BookingCreated 
+            };
+            _notificationRepository.Add(notification);
             return await _bookingRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success" : "Failed";
         }
     }

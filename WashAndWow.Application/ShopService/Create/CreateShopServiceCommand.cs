@@ -9,5 +9,9 @@ namespace WashAndWow.Application.ShopService.Create
         public string Description { get; set; }
         public decimal PricePerKg { get; set; }
         public string ShopId { get; set; }
+        public CreateShopServiceCommand()
+        {
+
+        }
     }
 }

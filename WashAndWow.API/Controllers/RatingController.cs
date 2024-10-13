@@ -21,8 +21,12 @@ namespace WashAndWow.API.Controllers
         {
             _mediator = mediator;
         }
-
-        // Get all rating of a shop
+        /// <summary>
+        /// Get all rating for all shop
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<IPagedResult<RatingDto>>), StatusCodes.Status200OK)]
@@ -34,8 +38,12 @@ namespace WashAndWow.API.Controllers
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new JsonResponse<IPagedResult<RatingDto>>(result));
         }
-
-        // Get a specific rating by ID
+        /// <summary>
+        /// Get rating of a shop by it id
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
         [Produces(MediaTypeNames.Application.Json)]
@@ -55,10 +63,15 @@ namespace WashAndWow.API.Controllers
             return Ok(new JsonResponse<RatingDto>(result));
         }
 
-        // Create a new rating
+        /// <summary>
+        /// Create a new rating with noti
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(JsonResponse<RatingDto>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateRating(
@@ -66,7 +79,7 @@ namespace WashAndWow.API.Controllers
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return Ok(new JsonResponse<string>(result));
+            return Ok(new JsonResponse<RatingDto>(result));
         }
 
         // Update an existing rating
