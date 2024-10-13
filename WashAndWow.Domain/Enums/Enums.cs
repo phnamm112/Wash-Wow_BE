@@ -57,5 +57,13 @@
             PENDING,
             CANCEL
         }
+        public enum NotificationType
+        {
+            BookingCreated,
+            BookingCanceled,
+            BookingCompleted,
+            RatingCreated,
+
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace Wash_Wow.Infrastructure.Persistence
         public DbSet<FormFieldValueEntity> FormFieldValues { get; set; }
         public DbSet<EmailVerification> EmailVerifications { get; set; }
         public DbSet<PaymentEntity> Payments { get; set; }
+        public DbSet<NotificationEntity> Notifications { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -41,6 +42,7 @@ namespace Wash_Wow.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new FormConfiguration());
             modelBuilder.ApplyConfiguration(new FormTemplateConfiguration());
             modelBuilder.ApplyConfiguration(new EmailVerificationConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             ConfigureModel(modelBuilder);
         }
         private void ConfigureModel(ModelBuilder modelBuilder)
