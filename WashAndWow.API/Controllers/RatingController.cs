@@ -24,7 +24,9 @@ namespace WashAndWow.API.Controllers
         /// <summary>
         /// Get all rating for all shop
         /// </summary>
-        /// <param name="query"></param>
+        /// <param name="shopId"></param>
+        /// <param name="pageNo"></param>
+        /// <param name="pageSize"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
@@ -32,9 +34,12 @@ namespace WashAndWow.API.Controllers
         [ProducesResponseType(typeof(JsonResponse<IPagedResult<RatingDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<IPagedResult<RatingDto>>>> GetAllRating(
-            [FromQuery] GetAllRatingQuery query,
+            [FromQuery] string shopId,
+            [FromQuery] int pageNo,
+            [FromQuery] int pageSize,
             CancellationToken cancellationToken = default)
         {
+            GetAllRatingQuery query = new GetAllRatingQuery(shopId, pageNo, pageSize);
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(new JsonResponse<IPagedResult<RatingDto>>(result));
         }
@@ -49,7 +54,8 @@ namespace WashAndWow.API.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<RatingDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetRatingById(string id,
+        public async Task<IActionResult> GetRatingById(
+            [FromRoute] string id,
             CancellationToken cancellationToken = default)
         {
             var query = new GetRatingByIdQuery(id);

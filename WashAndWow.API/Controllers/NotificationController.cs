@@ -10,7 +10,7 @@ using WashAndWow.Application.Notification;
 
 namespace WashAndWow.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class NotificationController : ControllerBase
     {

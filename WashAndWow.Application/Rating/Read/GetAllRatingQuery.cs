@@ -6,9 +6,9 @@ namespace WashAndWow.Application.Rating.Read
 {
     public class GetAllRatingQuery : IRequest<IPagedResult<RatingDto>>, IQuery
     {
-        public string ShopId { get; }
-        public int PageNo { get; } = 1;
-        public int PageSize { get; } = 10;
+        public string ShopId { get; set; }
+        public int PageNo { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
         public GetAllRatingQuery()
         {
         }
