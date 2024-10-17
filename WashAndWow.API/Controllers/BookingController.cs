@@ -105,8 +105,8 @@ namespace WashAndWow.API.Controllers
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        [HttpPut]
-        [Route("bookings/booking-status/{id}")]
+        [HttpPatch]
+        [Route("bookings/{id}/status")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

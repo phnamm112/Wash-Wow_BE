@@ -32,7 +32,7 @@ namespace WashAndWow.API.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{shopID}")]
+        [Route("by-shop-id/{shopID}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<IPagedResult<ShopServiceDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
@@ -80,7 +80,7 @@ namespace WashAndWow.API.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{ownerId}")]
+        [Route("by-owner/{ownerId}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<PagedResult<ShopServiceDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -127,7 +127,7 @@ namespace WashAndWow.API.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpPut]
-        [Route("/service/{id}")]
+        [Route("service/{id}")]
         [Produces(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
