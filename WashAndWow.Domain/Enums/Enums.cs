@@ -23,7 +23,8 @@
             CONFIRMED,
             PROCESSING,
             COMPLETED,
-            CANCELLED
+            CANCELLED,
+            REJECTED
         }
 
         //SHOP ENUM
@@ -62,7 +63,10 @@
             BookingCreated,
             BookingCanceled,
             BookingCompleted,
+            BookingRejected,
+            BookingConfirmed,
             RatingCreated,
+
 
         }
     }
