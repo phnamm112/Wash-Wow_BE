@@ -80,6 +80,7 @@ namespace WashAndWow.Application.Booking.Create
             {
                 Status = BookingStatus.PENDING,
                 ShopPickupTime = request.ShopPickupTime,
+                CustomerPickpupTime = request.CustomerPickupTime,
                 Note = request.Note ?? user.FullName, // điền note hoặc note là tên người dùng
                 TotalPrice = 0,
                 LaundryShopID = laundryShop.ID,
@@ -167,6 +168,7 @@ namespace WashAndWow.Application.Booking.Create
                 BookingID = booking.ID,
                 Name = booking.ID + " BANKING",
                 Status = PaymentStatus.PENDING,
+                ExpiryTime = booking.ShopPickupTime.AddHours(-1),
                 CreatedAt = DateTime.UtcNow,
                 CreatorID = _currentUserService.UserId,
             };

@@ -56,6 +56,7 @@ namespace WashAndWow.Application.ShopService.Create
                 Name = request.Name,
                 Description = request.Description,
                 PricePerKg = request.PricePerKg,
+                MinLaundryWeight = request.MinLaundryWeight,
                 ShopID = request.ShopId,
                 CreatedAt = DateTime.Now,
                 CreatorID = user.ID,

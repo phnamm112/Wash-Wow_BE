@@ -20,6 +20,9 @@ namespace WashAndWow.Application.ShopService.Create
             RuleFor(v => v.PricePerKg)
                 .GreaterThan(0).WithMessage("Price per kg must be greater than 0");
 
+            RuleFor(v => v.MinLaundryWeight)
+                .GreaterThan(0).WithMessage("minimum weight must be greater than 0");
+
             RuleFor(v => v.ShopId)
                 .NotEmpty().WithMessage("Shop ID is required");
         }
