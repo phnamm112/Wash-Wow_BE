@@ -14,6 +14,7 @@ namespace WashAndWow.Domain.Entities.ConfigTable
     {
         public required double Amount { get; set; }
         public required PaymentStatus Status { get; set; }
+        public required DateTime ExpiryTime { get; set; }
         public required string BookingID { get; set; }
         [ForeignKey(nameof(BookingID))]
         public virtual BookingEntity Booking { get; set; }

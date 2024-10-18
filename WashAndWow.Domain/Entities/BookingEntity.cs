@@ -14,7 +14,7 @@ namespace Wash_Wow.Domain.Entities
         public string? Note { get; set; }
         public required BookingStatus Status { get; set; }
         public required DateTime ShopPickupTime { get; set; }
-
+        public required DateTime CustomerPickpupTime { get; set; }
 
         [ForeignKey(nameof(CreatorID))]  // Booking luôn là customer
         public virtual UserEntity Customer { get; set; }

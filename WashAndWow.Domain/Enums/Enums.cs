@@ -56,7 +56,8 @@
             SUCCESS,
             FAILURE,
             PENDING,
-            CANCEL
+            CANCEL,
+            EXPIRED
         }
         public enum NotificationType
         {
@@ -66,6 +67,8 @@
             BookingRejected,
             BookingConfirmed,
             RatingCreated,
+            PaymentReminder,
+            PaymentExpired,
 
 
         }
