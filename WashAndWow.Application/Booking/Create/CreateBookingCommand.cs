@@ -4,7 +4,7 @@ using WashAndWow.Application.BookingItem.Create;
 
 namespace WashAndWow.Application.Booking.Create
 {
-    public class CreateBookingCommand : IRequest<string>, ICommand
+    public class CreateBookingCommand : IRequest<CreateBookingResponse>, ICommand
     {
         public float LaundryWeight { get; set; }
         public string? Note { get; set; }

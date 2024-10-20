@@ -11,16 +11,19 @@ namespace WashAndWow.Application.Booking.GetAllByShopID
         private readonly IBookingRepository _bookingRepository;
         private readonly IUserRepository _userRepository;
         private readonly ILaundryShopRepository _laundryShopRepository;
+        private readonly IPaymentRepository _paymentRepository;
         private readonly IMapper _mapper;
 
         public GetAllBookingByShopIdCommandHandler(IBookingRepository bookingRepository
             , IUserRepository userRepository
             , ILaundryShopRepository laundryShopRepository
+            , IPaymentRepository paymentRepository
             , IMapper mapper)
         {
             _bookingRepository = bookingRepository;
             _userRepository = userRepository;
             _laundryShopRepository = laundryShopRepository;
+            _paymentRepository = paymentRepository;
             _mapper = mapper;
         }
 
@@ -30,13 +33,13 @@ namespace WashAndWow.Application.Booking.GetAllByShopID
                 , request.PageNumber, request.PageSize, cancellationToken);
             var customer = await _userRepository.FindAllToDictionaryAsync(x => x.DeletedAt == null, x => x.ID, x => x.FullName, cancellationToken);
             var laundryShops = await _laundryShopRepository.FindAllToDictionaryAsync(x => x.DeletedAt == null, x => x.ID, x => x.Name, cancellationToken);
-
+            var payments = await _paymentRepository.FindAllToDictionaryAsync(x => x.DeletedAt == null, x => x.BookingID, x => x.ID, cancellationToken);
             return PagedResult<BookingDto>.Create(
             totalCount: result.TotalCount,
             pageCount: result.PageCount,
             pageSize: result.PageSize,
                 pageNumber: result.PageNo,
-                data: result.MapToBookingDtoList(_mapper, customer, laundryShops));
+                data: result.MapToBookingDtoList(_mapper, customer, laundryShops, payments));
         }
     }
 }

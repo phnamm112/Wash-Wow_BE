@@ -70,10 +70,10 @@ namespace WashAndWow.API.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <returns>A JSON response with the booking and payment information</returns>
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(JsonResponse<string>), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(JsonResponse<CreateBookingResponse>), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<JsonResponse<string>>> CreateBooking(
@@ -81,7 +81,7 @@ namespace WashAndWow.API.Controllers
             CancellationToken cancellationToken = default)
         {
             var result = await _mediator.Send(command, cancellationToken);
-            return Ok(new JsonResponse<string>(result));
+            return Ok(new JsonResponse<CreateBookingResponse>(result));
         }
 
         // Update an existing booking

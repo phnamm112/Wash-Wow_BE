@@ -11,16 +11,19 @@ namespace WashAndWow.Application.Booking.GetByID
         private readonly IBookingRepository _bookingRepository;
         private readonly IUserRepository _userRepository;
         private readonly ILaundryShopRepository _laundryShopRepository;
+        private readonly IPaymentRepository _paymentRepository;
         private readonly IMapper _mapper;
 
         public GetBookingByIdQueryHandler(IBookingRepository bookingRepository
             , IUserRepository userRepository
             , ILaundryShopRepository laundryShopRepository
+            , IPaymentRepository paymentRepository
             , IMapper mapper)
         {
             _bookingRepository = bookingRepository;
             _userRepository = userRepository;
             _laundryShopRepository = laundryShopRepository;
+            _paymentRepository = paymentRepository;
             _mapper = mapper;
         }
 
@@ -41,8 +44,12 @@ namespace WashAndWow.Application.Booking.GetByID
             {
                 throw new NotFoundException("Laundry shop is not exist");
             }
-
-            return booking.MapToBookingDto(_mapper, user.FullName, laundryShop.Name);
+            var payment = await _paymentRepository.FindAsync(x => x.BookingID == booking.ID && x.DeletedAt == null, cancellationToken);
+            if (payment == null)
+            {
+                throw new NotFoundException("Payment is not exist");
+            }
+            return booking.MapToBookingDto(_mapper, user.FullName, laundryShop.Name, payment.ID);
         }
     }
 }

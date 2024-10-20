@@ -12,7 +12,7 @@ using static Wash_Wow.Domain.Enums.Enums;
 
 namespace WashAndWow.Application.Booking.Create
 {
-    public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, string>
+    public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, CreateBookingResponse>
     {
         private readonly IBookingRepository _bookingRepository;
         private readonly IMapper _mapper;
@@ -48,7 +48,7 @@ namespace WashAndWow.Application.Booking.Create
             _notificationRepository = notificationRepository;
         }
 
-        public async Task<string> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
+        public async Task<CreateBookingResponse> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
             // User validation
             var user = await _userRepository.FindAsync(x => x.ID == _currentUserService.UserId && x.DeletedAt == null, cancellationToken);
@@ -190,7 +190,10 @@ namespace WashAndWow.Application.Booking.Create
                 Type = NotificationType.BookingCreated 
             };
             _notificationRepository.Add(notification);
-            return await _bookingRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success" : "Failed";
+            var success = await _bookingRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0;
+            if (!success)
+                throw new Exception("Failed to create booking or payment.");
+            return new CreateBookingResponse(booking.ID, payment.ID);
         }
     }
 }
