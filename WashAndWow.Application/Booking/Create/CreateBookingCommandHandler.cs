@@ -103,6 +103,11 @@ namespace WashAndWow.Application.Booking.Create
                 {
                     throw new Exception("Shop service is not belong to LaundryShopID: " + booking.LaundryShopID);
                 }
+                // Check if the laundry weight meets the minimum requirement for the service
+                if ((decimal)booking.LaundryWeight < shopService.MinLaundryWeight)
+                {
+                    throw new Exception($"Laundry weight must be at least {shopService.MinLaundryWeight} kg for service {shopService.Name}");
+                }
                 BookingItemEntity bookingItem = new BookingItemEntity
                 {
                     BookingID = booking.ID,

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Wash_Wow.Application.Common.Interfaces;
 using Wash_Wow.Domain.Common.Exceptions;
 using Wash_Wow.Domain.Repositories;
+using WashAndWow.Domain.Entities;
 using WashAndWow.Domain.Repositories;
 using static Wash_Wow.Domain.Enums.Enums;
 
@@ -24,6 +25,7 @@ namespace WashAndWow.Application.Payment.AfterPayment
         private readonly IVoucherRepository _voucherRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPaymentRepository _paymentRepository;
+        private readonly INotificationRepository _notificationRepository;
 
         public AfterPaymentCommandHandler(IBookingRepository bookingRepository
             , IMapper mapper
@@ -33,7 +35,8 @@ namespace WashAndWow.Application.Payment.AfterPayment
             , IShopServiceRepository shopServiceRepository
             , IVoucherRepository voucherRepository
             , IUserRepository userRepository
-            , IPaymentRepository paymentRepository)
+            , IPaymentRepository paymentRepository
+            , INotificationRepository notificationRepository)
         {
             _bookingRepository = bookingRepository;
             _mapper = mapper;
@@ -44,6 +47,7 @@ namespace WashAndWow.Application.Payment.AfterPayment
             _voucherRepository = voucherRepository;
             _userRepository = userRepository;
             _paymentRepository = paymentRepository;
+            _notificationRepository = notificationRepository;
         }
 
         public async Task<string> Handle(AfterPaymentCommand request, CancellationToken cancellationToken)
@@ -88,7 +92,29 @@ namespace WashAndWow.Application.Payment.AfterPayment
                 decimal baseTotalPrice = booking.TotalPrice + booking.VoucherDiscounted ?? 0;
                 laundryShop.Wallet += baseTotalPrice * (decimal)0.88;
             }
-            //TODO: gửi noti
+            // Create notifications for both customer and shop
+            var customerNotification = new NotificationEntity
+            {
+                ReceiverID = customer.ID,
+                Content = $"Your payment for Booking {booking.ID} at {laundryShop.Name} has been processed successfully.",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow,
+                CreatorID = _currentUserService.UserId,
+                Type = NotificationType.BookingCreated
+            };
+
+            var shopOwnerNotification = new NotificationEntity
+            {
+                ReceiverID = laundryShop.ID,
+                Content = $"A payment has been made for Booking {booking.ID} by {customer.FullName}.",
+                IsRead = false,
+                CreatedAt = DateTime.UtcNow,
+                CreatorID = _currentUserService.UserId,
+                Type = NotificationType.BookingCreated
+            };
+
+            _notificationRepository.Add(customerNotification);
+            _notificationRepository.Add(shopOwnerNotification);
             return await _bookingRepository.UnitOfWork.SaveChangesAsync(cancellationToken) > 0 ? "Success" : "Failure";
         }
     }

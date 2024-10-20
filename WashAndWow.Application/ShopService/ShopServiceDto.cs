@@ -10,6 +10,7 @@ namespace WashAndWow.Application.ShopService
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal PricePerKg { get; set; }
+        public decimal MinLaundryWeight { get; set; }
         public string ShopID { get; set; }
         public string ShopName { get; set; }
 

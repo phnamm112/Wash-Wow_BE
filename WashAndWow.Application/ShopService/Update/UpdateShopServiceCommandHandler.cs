@@ -53,6 +53,7 @@ namespace WashAndWow.Application.ShopService.Update
             shopService.Name = request.Name;
             shopService.Description = request.Description;
             shopService.PricePerKg = request.PricePerKg;
+            shopService.MinLaundryWeight = request.MinLaundryWeight;
             shopService.UpdaterID = currentUserId;
             shopService.LastestUpdateAt = DateTime.UtcNow;
 
